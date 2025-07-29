@@ -477,7 +477,7 @@
     "type": "form-quiz",
     "question": "不規則動詞 'courir' (走る) の直説法現在の活用を全て答えてください。",
     "sub_questions": [
-      { "label": "j'", "answer": "cours" },
+      { "label": "je", "answer": "cours" },
       { "label": "tu", "answer": "cours" },
       { "label": "il/elle/on", "answer": "court" },
       { "label": "nous", "answer": "courons" },
@@ -492,7 +492,7 @@
     "type": "form-quiz",
     "question": "不規則動詞 'boire' (飲む) の直説法現在の活用を全て答えてください。",
     "sub_questions": [
-      { "label": "j'", "answer": "bois" },
+      { "label": "je", "answer": "bois" },
       { "label": "tu", "answer": "bois" },
       { "label": "il/elle/on", "answer": "boit" },
       { "label": "nous", "answer": "buvons" },

@@ -387,21 +387,8 @@
     "question": "単純形の指示代名詞を、性・数に合わせて全て答えてください。",
     "sub_questions": [
       { "label": "男性単数", "answer": "celui" },
-      { "label": "女性単数", "answer": "celle" },
       { "label": "男性複数", "answer": "ceux" },
-      { "label": "女性複数", "answer": "celles" }
-    ]
-  },
-  {
-    "lesson": 12,
-    "category": "代名詞",
-    "topic": "指示代名詞",
-    "type": "form-quiz",
-    "question": "単純形の指示代名詞を、性・数に合わせて全て答えてください。",
-    "sub_questions": [
-      { "label": "男性単数", "answer": "celui" },
       { "label": "女性単数", "answer": "celle" },
-      { "label": "男性複数", "answer": "ceux" },
       { "label": "女性複数", "answer": "celles" }
     ]
   },
@@ -413,8 +400,8 @@
     "question": "「私のもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
     "sub_questions": [
       { "label": "男性単数", "answer": "le mien" },
-      { "label": "女性単数", "answer": "la mienne" },
       { "label": "男性複数", "answer": "les miens" },
+      { "label": "女性単数", "answer": "la mienne" },
       { "label": "女性複数", "answer": "les miennes" }
     ]
   },
@@ -426,8 +413,8 @@
     "question": "「あなたのもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
     "sub_questions": [
       { "label": "男性単数", "answer": "le tien" },
-      { "label": "女性単数", "answer": "la tienne" },
       { "label": "男性複数", "answer": "les tiens" },
+      { "label": "女性単数", "answer": "la tienne" },
       { "label": "女性複数", "answer": "les tiennes" }
     ]
   },
@@ -439,8 +426,8 @@
     "question": "「彼のもの/彼女のもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
     "sub_questions": [
       { "label": "男性単数", "answer": "le sien" },
-      { "label": "女性単数", "answer": "la sienne" },
       { "label": "男性複数", "answer": "les siens" },
+      { "label": "女性単数", "answer": "la sienne" },
       { "label": "女性複数", "answer": "les siennes" }
     ]
   },
@@ -452,8 +439,8 @@
     "question": "「私たちのもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
     "sub_questions": [
       { "label": "男性単数", "answer": "le nôtre" },
-      { "label": "女性単数", "answer": "la nôtre" },
       { "label": "男性複数", "answer": "les nôtres" },
+      { "label": "女性単数", "answer": "la nôtre" },
       { "label": "女性複数", "answer": "les nôtres" }
     ]
   },
@@ -462,11 +449,11 @@
     "category": "代名詞",
     "topic": "所有代名詞",
     "type": "form-quiz",
-    "question": "「あなた（vous）のもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
+    "question": "「あなた（たち）のもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
     "sub_questions": [
       { "label": "男性単数", "answer": "le vôtre" },
-      { "label": "女性単数", "answer": "la vôtre" },
       { "label": "男性複数", "answer": "les vôtres" },
+      { "label": "女性単数", "answer": "la vôtre" },
       { "label": "女性複数", "answer": "les vôtres" }
     ]
   },
@@ -478,8 +465,8 @@
     "question": "「彼らのもの/彼女らのもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
     "sub_questions": [
       { "label": "男性単数", "answer": "le leur" },
-      { "label": "女性単数", "answer": "la leur" },
       { "label": "男性複数", "answer": "les leurs" },
+      { "label": "女性単数", "answer": "la leur" },
       { "label": "女性複数", "answer": "les leurs" }
     ]
   },

@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 読み込み成功後の処理
       loadingMessage.textContent =
-        "学習したい文法カテゴリーを選んで、クイズを始めましょう。";
+        "学習したいレッスンを選んで、クイズを始めましょう。";
       const lessons = [...new Set(allProblems.map((p) => p.lesson))];
       renderLessons(lessons);
       lessonSelection.classList.remove("hidden");

@@ -343,6 +343,28 @@ document.addEventListener("DOMContentLoaded", () => {
       "percentage-text"
     ).textContent = `正答率: ${percentage}%`;
 
+    // ★追加: 間違えた問題だけを解き直す機能
+    const retryIncorrectBtn = document.getElementById("retry-incorrect-btn");
+    if (incorrectAnswers.length > 0) {
+      retryIncorrectBtn.classList.remove("hidden");
+
+      // 古いイベントリスナーを削除してから新しいものを追加
+      const newBtn = retryIncorrectBtn.cloneNode(true);
+      retryIncorrectBtn.parentNode.replaceChild(newBtn, retryIncorrectBtn);
+
+      newBtn.addEventListener("click", () => {
+        const incorrectProblems = incorrectAnswers.map((item) => item.problem);
+        // 復習クイズ用の特別なレッスン名を付ける
+        const reviewLessonName =
+          typeof currentLesson === "string" && currentLesson.includes("(復習)")
+            ? currentLesson
+            : `${currentLesson} (復習)`;
+        setupQuiz(incorrectProblems, reviewLessonName);
+      });
+    } else {
+      retryIncorrectBtn.classList.add("hidden");
+    }
+
     // ★修正: 間違えた問題のフィードバックを表示する処理
     const feedbackContainer = document.getElementById(
       "incorrect-feedback-container"

@@ -310,6 +310,89 @@
     ]
   },
   {
+    "lesson": 11,
+    "category": "動詞",
+    "topic": "直説法単純未来",
+    "type": "fill-in-the-blank",
+    "question": "動詞 'être' の単純未来の一人称単数の活用を全て答えてください。",
+    "answer": "serai"
+  },
+  {
+    "lesson": 11,
+    "category": "動詞",
+    "topic": "直説法単純未来",
+    "type": "fill-in-the-blank",
+    "question": "動詞 'aller' の単純未来の一人称単数の活用を全て答えてください。",
+    "answer": "irai"
+  },
+  {
+    "lesson": 11,
+    "category": "動詞",
+    "topic": "直説法単純未来",
+    "type": "fill-in-the-blank",
+    "question": "動詞 'voir' の単純未来の一人称単数の活用を全て答えてください。",
+    "answer": "verrai"
+  },
+  {
+    "lesson": 11,
+    "category": "動詞",
+    "topic": "直説法単純未来",
+    "type": "fill-in-the-blank",
+    "question": "動詞 'avoir' の単純未来の一人称単数の活用を全て答えてください。",
+    "answer": "aurai"
+  },
+  {
+    "lesson": 11,
+    "category": "動詞",
+    "topic": "直説法単純未来",
+    "type": "fill-in-the-blank",
+    "question": "動詞 'faire' の単純未来の一人称単数の活用を全て答えてください。",
+    "answer": "ferai"
+  },
+  {
+    "lesson": 11,
+    "category": "動詞",
+    "topic": "不規則動詞の直説法現在形",
+    "type": "form-quiz",
+    "question": "不規則動詞 'ouvrir' (開ける) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "j'", "answer": "ouvre" },
+      { "label": "tu", "answer": "ouvres" },
+      { "label": "il/elle/on", "answer": "ouvre" },
+      { "label": "nous", "answer": "ouvrons" },
+      { "label": "vous", "answer": "ouvrez" },
+      { "label": "ils/elles", "answer": "ouvrent" }
+    ]
+  },
+  {
+    "lesson": 11,
+    "category": "動詞",
+    "topic": "不規則動詞の直説法現在形",
+    "type": "form-quiz",
+    "question": "不規則動詞 'devoir' (義務) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "j'", "answer": "dois" },
+      { "label": "tu", "answer": "dois" },
+      { "label": "il/elle/on", "answer": "doit" },
+      { "label": "nous", "answer": "devons" },
+      { "label": "vous", "answer": "devez" },
+      { "label": "ils/elles", "answer": "doivent" }
+    ]
+  },
+  {
+    "lesson": 12,
+    "category": "代名詞",
+    "topic": "指示代名詞",
+    "type": "form-quiz",
+    "question": "単純形の指示代名詞を、性・数に合わせて全て答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "celui" },
+      { "label": "女性単数", "answer": "celle" },
+      { "label": "男性複数", "answer": "ceux" },
+      { "label": "女性複数", "answer": "celles" }
+    ]
+  },
+  {
     "lesson": 12,
     "category": "代名詞",
     "topic": "指示代名詞",
@@ -340,12 +423,94 @@
     "category": "代名詞",
     "topic": "所有代名詞",
     "type": "form-quiz",
+    "question": "「あなたのもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "le tien" },
+      { "label": "女性単数", "answer": "la tienne" },
+      { "label": "男性複数", "answer": "les tiens" },
+      { "label": "女性複数", "answer": "les tiennes" }
+    ]
+  },
+  {
+    "lesson": 12,
+    "category": "代名詞",
+    "topic": "所有代名詞",
+    "type": "form-quiz",
+    "question": "「彼のもの/彼女のもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "le sien" },
+      { "label": "女性単数", "answer": "la sienne" },
+      { "label": "男性複数", "answer": "les siens" },
+      { "label": "女性複数", "answer": "les siennes" }
+    ]
+  },
+  {
+    "lesson": 12,
+    "category": "代名詞",
+    "topic": "所有代名詞",
+    "type": "form-quiz",
+    "question": "「私たちのもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "le nôtre" },
+      { "label": "女性単数", "answer": "la nôtre" },
+      { "label": "男性複数", "answer": "les nôtres" },
+      { "label": "女性複数", "answer": "les nôtres" }
+    ]
+  },
+  {
+    "lesson": 12,
+    "category": "代名詞",
+    "topic": "所有代名詞",
+    "type": "form-quiz",
     "question": "「あなた（vous）のもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
     "sub_questions": [
       { "label": "男性単数", "answer": "le vôtre" },
       { "label": "女性単数", "answer": "la vôtre" },
       { "label": "男性複数", "answer": "les vôtres" },
       { "label": "女性複数", "answer": "les vôtres" }
+    ]
+  },
+  {
+    "lesson": 12,
+    "category": "代名詞",
+    "topic": "所有代名詞",
+    "type": "form-quiz",
+    "question": "「彼らのもの/彼女らのもの」を意味する所有代名詞を、性・数に合わせて全て答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "le leur" },
+      { "label": "女性単数", "answer": "la leur" },
+      { "label": "男性複数", "answer": "les leurs" },
+      { "label": "女性複数", "answer": "les leurs" }
+    ]
+  },
+  {
+    "lesson": 12,
+    "category": "動詞",
+    "topic": "不規則動詞の直説法現在形",
+    "type": "form-quiz",
+    "question": "不規則動詞 'courir' (走る) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "j'", "answer": "cours" },
+      { "label": "tu", "answer": "cours" },
+      { "label": "il/elle/on", "answer": "court" },
+      { "label": "nous", "answer": "courons" },
+      { "label": "vous", "answer": "courez" },
+      { "label": "ils/elles", "answer": "courent" }
+    ]
+  },
+  {
+    "lesson": 11,
+    "category": "動詞",
+    "topic": "不規則動詞の直説法現在形",
+    "type": "form-quiz",
+    "question": "不規則動詞 'boire' (飲む) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "j'", "answer": "bois" },
+      { "label": "tu", "answer": "bois" },
+      { "label": "il/elle/on", "answer": "boit" },
+      { "label": "nous", "answer": "buvons" },
+      { "label": "vous", "answer": "buvez" },
+      { "label": "ils/elles", "answer": "boivent" }
     ]
   },
   {

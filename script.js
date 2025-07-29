@@ -127,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
       input.className =
         "w-full p-3 border-2 border-slate-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 outline-none transition";
       input.placeholder = "回答を入力...";
+      input.autocomplete = "off"; // ★変更: 履歴の非表示設定を追加
       input.addEventListener("focus", () => {
         lastFocusedInput = input;
       });
@@ -160,9 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
       problem.sub_questions.forEach((sq, index) => {
         const group = document.createElement("div");
         const inputId = `form-quiz-input-${index}`;
+        // ★変更: 履歴の非表示設定(autocomplete="off")を追加
         group.innerHTML = `
                   <label for="${inputId}" class="block text-sm font-medium text-slate-700">${sq.label}</label>
-                  <input type="text" id="${inputId}" class="mt-1 block w-full border-2 border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition">
+                  <input type="text" id="${inputId}" class="mt-1 block w-full border-2 border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition" autocomplete="off">
                   `;
         const input = group.querySelector("input");
         input.addEventListener("focus", () => {

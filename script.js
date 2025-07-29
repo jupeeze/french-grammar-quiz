@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentProblemIndex = 0;
   let score = 0;
   let currentLesson = 0;
+  let incorrectAnswers = []; // ★追加: 間違えた問題を保存する配列
 
   // --- 初期化 ---
   async function init() {
@@ -91,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     score = 0;
     currentLesson = lessonName;
     lastFocusedInput = null;
+    incorrectAnswers = []; // ★修正: クイズ開始時に間違えた問題リストをリセット
 
     startScreen.classList.add("hidden");
     resultScreen.classList.add("hidden");
@@ -127,13 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
       input.className =
         "w-full p-3 border-2 border-slate-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 outline-none transition";
       input.placeholder = "回答を入力...";
-      input.autocomplete = "off"; // ★変更: 履歴の非表示設定を追加
+      input.autocomplete = "off";
       input.addEventListener("focus", () => {
         lastFocusedInput = input;
       });
       input.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
-          e.preventDefault(); // この行を追加
+          e.preventDefault(); // Enterキーのデフォルト動作をキャンセル
           checkAnswer(input.value);
         }
       });
@@ -150,19 +152,13 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (problem.type === "form-quiz") {
       const form = document.createElement("div");
 
-      // 1. 要素の数を取得
       const numItems = problem.sub_questions.length;
-
-      // 2. 2列レイアウトに必要な行数を計算 (例: 6個なら3行、7個や8個なら4行)
       const numRows = Math.ceil(numItems / 2);
-
-      // 3. 計算した行数を使ってクラス名を動的に生成
       form.className = `grid grid-cols-2 sm:grid-flow-col sm:grid-rows-${numRows} gap-x-6 gap-y-4`;
 
       problem.sub_questions.forEach((sq, index) => {
         const group = document.createElement("div");
         const inputId = `form-quiz-input-${index}`;
-        // ★変更: 履歴の非表示設定(autocomplete="off")を追加
         group.innerHTML = `
                   <label for="${inputId}" class="block text-sm font-medium text-slate-700">${sq.label}</label>
                   <input type="text" id="${inputId}" class="mt-1 block w-full border-2 border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition" autocomplete="off">
@@ -201,25 +197,22 @@ document.addEventListener("DOMContentLoaded", () => {
       "ç",
     ];
     const buttonContainer = document.createElement("div");
-    // ボタンは入力欄の直下にくるように調整
     buttonContainer.className = "mt-3 flex flex-wrap justify-center gap-2";
 
     accentChars.forEach((char) => {
       const button = document.createElement("button");
-      button.type = "button"; // フォームの送信を防止
+      button.type = "button";
       button.className =
         "w-10 h-10 bg-slate-100 text-slate-800 rounded-md hover:bg-slate-200 transition-colors text-lg font-mono";
       button.textContent = char;
       button.addEventListener("click", (e) => {
-        e.preventDefault(); // デフォルトのクリック動作をキャンセル
+        e.preventDefault();
         if (lastFocusedInput) {
           const start = lastFocusedInput.selectionStart;
           const end = lastFocusedInput.selectionEnd;
           const text = lastFocusedInput.value;
-          // カーソル位置に文字を挿入
           lastFocusedInput.value =
             text.substring(0, start) + char + text.substring(end);
-          // フォーカスを戻し、カーソルを挿入した文字の後ろに移動
           lastFocusedInput.focus();
           const newPos = start + 1;
           lastFocusedInput.setSelectionRange(newPos, newPos);
@@ -228,25 +221,21 @@ document.addEventListener("DOMContentLoaded", () => {
       buttonContainer.appendChild(button);
     });
 
-    // fill-in-the-blank の場合は入力欄の直後に挿入
-    // if (container.querySelector('input[type="text"]')) {
-    //   container.querySelector('input[type="text"]').after(buttonContainer);
-    // } else {
-    {
-      container.appendChild(buttonContainer);
-    }
+    container.appendChild(buttonContainer);
   }
 
   // --- 回答チェック ---
   function checkAnswer(userAnswer) {
     const problem = currentQuizProblems[currentProblemIndex];
     let isCorrect = false;
+    let userAnswersForForm = []; // ★追加: form-quizのユーザー回答を保存
 
     if (problem.type === "form-quiz") {
       let allCorrect = true;
       const inputs = answerOptions.querySelectorAll("input");
       problem.sub_questions.forEach((sq, index) => {
         const input = inputs[index];
+        userAnswersForForm.push(input.value); // ★追加: ユーザーの回答を記録
         if (
           input.value.trim().toLowerCase() === sq.answer.trim().toLowerCase()
         ) {
@@ -257,7 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
           input.classList.remove("border-green-500");
           input.classList.add("border-red-500", "bg-red-50");
 
-          // 既にヒントが表示されている場合は追加しない
           if (!input.parentElement.querySelector(".hint-text")) {
             const hint = document.createElement("span");
             hint.className = "text-xs text-red-600 ml-1 mt-1 block hint-text";
@@ -276,6 +264,15 @@ document.addEventListener("DOMContentLoaded", () => {
       score++;
       showFeedback(true, "正解！");
     } else {
+      // ★修正: 間違えた問題と回答を記録
+      const incorrectData = { problem: problem };
+      if (problem.type === "form-quiz") {
+        incorrectData.userAnswers = userAnswersForForm;
+      } else {
+        incorrectData.userAnswer = userAnswer;
+      }
+      incorrectAnswers.push(incorrectData);
+
       const message =
         problem.type === "form-quiz"
           ? "不正解... 赤い箇所を確認してください。"
@@ -345,6 +342,61 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(
       "percentage-text"
     ).textContent = `正答率: ${percentage}%`;
+
+    // ★修正: 間違えた問題のフィードバックを表示する処理
+    const feedbackContainer = document.getElementById(
+      "incorrect-feedback-container"
+    );
+    feedbackContainer.innerHTML = ""; // コンテナをクリア
+
+    if (incorrectAnswers.length > 0) {
+      const title = document.createElement("h3");
+      title.className = "text-xl font-bold text-slate-700 mb-4 text-center";
+      title.textContent = "復習しましょう！✍️";
+      feedbackContainer.appendChild(title);
+
+      const list = document.createElement("div");
+      list.className = "space-y-6";
+
+      incorrectAnswers.forEach(({ problem, userAnswer, userAnswers }) => {
+        const item = document.createElement("div");
+        item.className = "bg-slate-50 p-4 rounded-lg";
+
+        let feedbackHTML = `
+          <p class="font-semibold text-slate-800">${problem.question}</p>
+        `;
+
+        if (problem.type === "form-quiz") {
+          feedbackHTML += '<ul class="mt-2 space-y-1 list-disc list-inside">';
+          problem.sub_questions.forEach((sq, index) => {
+            const userAnswerText = userAnswers[index] || "(無回答)";
+            if (userAnswerText.toLowerCase() !== sq.answer.toLowerCase()) {
+              feedbackHTML += `
+                        <li>
+                            <span class="font-medium">${sq.label}:</span>
+                            <span class="text-red-600 line-through">${userAnswerText}</span>
+                            <span class="text-green-600 font-bold ml-2">→ ${sq.answer}</span>
+                        </li>`;
+            }
+          });
+          feedbackHTML += "</ul>";
+        } else {
+          feedbackHTML += `
+              <p class="mt-2">
+                <span class="font-medium">あなたの回答:</span>
+                <span class="text-red-600">${userAnswer || "(無回答)"}</span>
+              </p>
+              <p>
+                <span class="font-medium">正解:</span>
+                <span class="text-green-600 font-bold">${problem.answer}</span>
+              </p>
+            `;
+        }
+        item.innerHTML = feedbackHTML;
+        list.appendChild(item);
+      });
+      feedbackContainer.appendChild(list);
+    }
   }
 
   function showStartScreen() {

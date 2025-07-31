@@ -280,6 +280,14 @@
     ]
   },
   {
+    "lesson": 8,
+    "category": "冠詞・前置詞",
+    "topic": "不定冠詞",
+    "type": "fill-in-the-blank",
+    "question": "否定文において、不定冠詞 'un, une, des' は通常どの単語に変わりますか？空欄にその単語を入れてください。: Je n'ai pas _______ stylo.",
+    "answer": "de"
+  },
+  {
     "lesson": 10,
     "category": "動詞",
     "topic": "直説法半過去（未完了）",
@@ -499,64 +507,6 @@
       { "label": "vous", "answer": "buvez" },
       { "label": "ils/elles", "answer": "boivent" }
     ]
-  },
-  {
-    "category": "動詞",
-    "topic": "etre の直説法現在形",
-    "type": "fill-in-the-blank",
-    "question": "空欄にêtreの正しい活用形を入れて文を完成させてください。: Vous _______ fatigué.",
-    "answer": "êtes"
-  },
-  {
-    "category": "動詞",
-    "topic": "avoir の直説法現在形",
-    "type": "fill-in-the-blank",
-    "question": "空欄にavoirの正しい活用形を入れて文を完成させてください。: Ils _______ une belle voiture.",
-    "answer": "ont"
-  },
-  {
-    "category": "代名詞",
-    "topic": "主語人称代名詞",
-    "type": "multiple-choice",
-    "question": "「私たちは学生です」という意味になるように、正しい主語人称代名詞を選んでください。: _______ sommes étudiants.",
-    "options": ["Je", "Nous", "Vous", "Ils"],
-    "answer": "Nous"
-  },
-  {
-    "category": "代名詞",
-    "topic": "主語人称代名詞",
-    "type": "multiple-choice",
-    "question": "文脈に合うように、正しい主語人称代名詞を選んでください。Marie et Sophie sont françaises. _______ parlent bien japonais.",
-    "options": ["Il", "Elle", "Ils", "Elles"],
-    "answer": "Elles"
-  },
-  {
-    "category": "冠詞・前置詞",
-    "topic": "定冠詞",
-    "type": "fill-in-the-blank",
-    "question": "空欄に正しい定冠詞を入れてください。: J'aime _______ chocolat.",
-    "answer": "le"
-  },
-  {
-    "category": "冠詞・前置詞",
-    "topic": "定冠詞",
-    "type": "fill-in-the-blank",
-    "question": "母音で始まる単語の前の定冠詞はどうなりますか？空欄に正しい定冠詞を入れてください。: C'est _______ amie de Paul.",
-    "answer": "l'"
-  },
-  {
-    "category": "冠詞・前置詞",
-    "topic": "不定冠詞",
-    "type": "fill-in-the-blank",
-    "question": "空欄に正しい不定冠詞を入れてください。: Il a _______ livre.",
-    "answer": "un"
-  },
-  {
-    "category": "冠詞・前置詞",
-    "topic": "不定冠詞",
-    "type": "fill-in-the-blank",
-    "question": "否定文において、不定冠詞 'un, une, des' は通常どの単語に変わりますか？空欄にその単語を入れてください。: Je n'ai pas _______ stylo.",
-    "answer": "de"
   },
   {
     "category": "形容詞・副詞",
@@ -1408,5 +1358,32 @@
     "type": "fill-in-the-blank",
     "question": "菓子、ケーキ屋",
     "answer": "pâtisserie"
+  },
+  {
+    "lesson": 13,
+    "category": "文の構造",
+    "topic": "語順（平叙文）",
+    "type": "scramble",
+    "question": "単語を並べ替えて、正しいフランス語の文を完成させてください。",
+    "words": ["suis", "Je", "étudiant"],
+    "answer": "Je suis étudiant"
+  },
+  {
+    "lesson": 13,
+    "category": "文の構造",
+    "topic": "語順（否定文）",
+    "type": "scramble",
+    "question": "単語を並べ替えて、正しいフランス語の文を完成させてください。",
+    "words": ["ne", "pas", "Je", "suis", "japonais"],
+    "answer": "Je ne suis pas japonais"
+  },
+  {
+    "lesson": 13,
+    "category": "文の構造",
+    "topic": "語順（近接未来）",
+    "type": "scramble",
+    "question": "単語を並べ替えて、正しいフランス語の文を完成させてください。",
+    "words": ["vais", "cinéma", "au", "Je", "aller"],
+    "answer": "Je vais aller au cinéma"
   }
 ]

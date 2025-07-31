@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentProblemIndex = 0;
   let score = 0;
   let currentLesson = 0;
-  let incorrectAnswers = []; // ★追加: 間違えた問題を保存する配列
+  let incorrectAnswers = []; // 間違えた問題を保存する配列
 
   // --- 初期化 ---
   async function init() {
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     score = 0;
     currentLesson = lessonName;
     lastFocusedInput = null;
-    incorrectAnswers = []; // ★修正: クイズ開始時に間違えた問題リストをリセット
+    incorrectAnswers = []; // クイズ開始時に間違えた問題リストをリセット
 
     startScreen.classList.add("hidden");
     resultScreen.classList.add("hidden");
@@ -178,6 +178,86 @@ document.addEventListener("DOMContentLoaded", () => {
         "mt-4 w-full py-3 px-6 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 transition-colors";
       submitBtn.onclick = () => checkAnswer(null);
       answerOptions.appendChild(submitBtn);
+    } else if (problem.type === "scramble") {
+      // ★★★ここからがスクランブル問題の追加機能★★★
+      // スクランブル問題用のUIを動的に生成
+      answerOptions.innerHTML = `
+        <div class="p-4 mb-4 text-center bg-slate-100 rounded-lg min-h-[60px] text-xl font-medium" id="scramble-answer-area"></div>
+        <div class="flex flex-wrap justify-center gap-3 mb-4" id="scramble-words-container"></div>
+        <div class="flex justify-center gap-3 mb-4" id="scramble-controls"></div>
+      `;
+
+      // 生成した要素を取得
+      const answerArea = document.getElementById("scramble-answer-area");
+      const wordsContainer = document.getElementById(
+        "scramble-words-container"
+      );
+      const controlsContainer = document.getElementById("scramble-controls");
+
+      // 単語ボタンをシャッフルして表示
+      problem.words
+        .sort(() => 0.5 - Math.random())
+        .forEach((word) => {
+          const button = document.createElement("button");
+          button.textContent = word;
+          button.className =
+            "word-button px-4 py-2 bg-white border-2 border-slate-300 rounded-lg text-lg font-semibold hover:bg-indigo-50 hover:border-indigo-400 transition-all disabled:opacity-40 disabled:cursor-not-allowed";
+          button.addEventListener("click", () => {
+            // 回答エリアに単語を追加（先頭以外はスペースを入れる）
+            if (answerArea.textContent.length > 0) {
+              answerArea.textContent += " ";
+            }
+            answerArea.textContent += word;
+            button.disabled = true; // ボタンを無効化する
+          });
+          wordsContainer.appendChild(button);
+        });
+
+      // 操作ボタン（クリア、一単語削除）
+      const clearBtn = document.createElement("button");
+      clearBtn.textContent = "やり直す";
+      clearBtn.className =
+        "px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors";
+      clearBtn.onclick = () => {
+        answerArea.textContent = "";
+        wordsContainer
+          .querySelectorAll(".word-button")
+          .forEach((btn) => (btn.disabled = false)); // 全ての単語ボタンを有効化
+      };
+      controlsContainer.appendChild(clearBtn);
+
+      const backspaceBtn = document.createElement("button");
+      backspaceBtn.textContent = "一単語消す";
+      backspaceBtn.className =
+        "px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors";
+      backspaceBtn.onclick = () => {
+        const currentWords = answerArea.textContent.trim().split(" ");
+        if (currentWords.length > 0 && currentWords[0] !== "") {
+          const lastWord = currentWords.pop();
+          answerArea.textContent = currentWords.join(" ");
+
+          // 無効化されたボタンの中から、最後の単語に一致するものを探し、有効化する
+          const wordButtons = wordsContainer.querySelectorAll(
+            ".word-button:disabled"
+          );
+          for (const btn of Array.from(wordButtons).reverse()) {
+            if (btn.textContent === lastWord) {
+              btn.disabled = false;
+              break; // 一つ有効化したらループを抜ける
+            }
+          }
+        }
+      };
+      controlsContainer.appendChild(backspaceBtn);
+
+      // 回答ボタン
+      const submitBtn = document.createElement("button");
+      submitBtn.textContent = "回答する";
+      submitBtn.className =
+        "mt-3 w-full py-3 px-6 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 transition-colors";
+      submitBtn.onclick = () => checkAnswer(answerArea.textContent);
+      answerOptions.appendChild(submitBtn);
+      // ★★★ここまでがスクランブル問題の追加機能★★★
     }
   }
 
@@ -228,14 +308,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function checkAnswer(userAnswer) {
     const problem = currentQuizProblems[currentProblemIndex];
     let isCorrect = false;
-    let userAnswersForForm = []; // ★追加: form-quizのユーザー回答を保存
+    let userAnswersForForm = []; // form-quizのユーザー回答を保存
 
     if (problem.type === "form-quiz") {
       let allCorrect = true;
       const inputs = answerOptions.querySelectorAll("input");
       problem.sub_questions.forEach((sq, index) => {
         const input = inputs[index];
-        userAnswersForForm.push(input.value); // ★追加: ユーザーの回答を記録
+        userAnswersForForm.push(input.value); // ユーザーの回答を記録
         if (
           input.value.trim().toLowerCase() === sq.answer.trim().toLowerCase()
         ) {
@@ -255,6 +335,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
       isCorrect = allCorrect;
+    } else if (problem.type === "scramble") {
+      // ★修正: スクランブル問題の場合、大文字・小文字を区別して完全一致で判定
+      isCorrect = userAnswer.trim() === problem.answer.trim();
     } else {
       isCorrect =
         userAnswer.trim().toLowerCase() === problem.answer.trim().toLowerCase();
@@ -264,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
       score++;
       showFeedback(true, "正解！");
     } else {
-      // ★修正: 間違えた問題と回答を記録
+      // 間違えた問題と回答を記録
       const incorrectData = { problem: problem };
       if (problem.type === "form-quiz") {
         incorrectData.userAnswers = userAnswersForForm;
@@ -310,7 +393,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function disableInputs() {
     answerOptions.querySelectorAll("button, input").forEach((el) => {
       el.disabled = true;
-      if (!el.parentElement.classList.contains("flex-wrap")) {
+      if (
+        !el.parentElement.classList.contains("flex-wrap") &&
+        !el.parentElement.id.includes("scramble-controls")
+      ) {
         el.classList.add("opacity-70", "cursor-not-allowed");
       } else {
         el.classList.add("opacity-70");
@@ -343,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "percentage-text"
     ).textContent = `正答率: ${percentage}%`;
 
-    // ★追加: 間違えた問題だけを解き直す機能
+    // 間違えた問題だけを解き直す機能
     const retryIncorrectBtn = document.getElementById("retry-incorrect-btn");
     if (incorrectAnswers.length > 0) {
       retryIncorrectBtn.classList.remove("hidden");
@@ -365,7 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
       retryIncorrectBtn.classList.add("hidden");
     }
 
-    // ★修正: 間違えた問題のフィードバックを表示する処理
+    // 間違えた問題のフィードバックを表示する処理
     const feedbackContainer = document.getElementById(
       "incorrect-feedback-container"
     );
@@ -403,6 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
           feedbackHTML += "</ul>";
         } else {
+          // fill-in-the-blank と scramble の場合
           feedbackHTML += `
               <p class="mt-2">
                 <span class="font-medium">あなたの回答:</span>

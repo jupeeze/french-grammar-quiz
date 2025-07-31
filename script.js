@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultScreen = document.getElementById("result-screen");
   const loadingMessage = document.getElementById("loading-message");
   const lessonSelection = document.getElementById("lesson-selection");
+  const quizTypeSelection = document.getElementById("quiz-type-selection");
   const quizTopic = document.getElementById("quiz-topic");
   const progressIndicator = document.getElementById("progress-indicator");
   const questionText = document.getElementById("question-text");
@@ -15,37 +16,51 @@ document.addEventListener("DOMContentLoaded", () => {
   let lastFocusedInput = null;
 
   // --- 状態管理 ---
-  let allProblems = [];
+  let quizData = {
+    grammar: [],
+    vocabulary: [],
+    text: [],
+  };
   let currentQuizProblems = [];
   let currentProblemIndex = 0;
   let score = 0;
   let currentLesson = 0;
+  let currentQuizType = "grammar"; // デフォルトの問題種別
   let incorrectAnswers = []; // 間違えた問題を保存する配列
 
   // --- 初期化 ---
   async function init() {
     try {
-      // 外部JSONファイルを読み込む
-      const response = await fetch("problems.json");
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      // 3つのJSONファイルを並行して読み込む
+      const [grammarRes, vocabularyRes, textRes] = await Promise.all([
+        fetch("problems.json"),
+        fetch("vocabulary.json"), // 単語問題ファイル
+        fetch("text.json"), // 本文問題ファイル
+      ]);
+
+      if (!grammarRes.ok || !vocabularyRes.ok || !textRes.ok) {
+        throw new Error(`HTTP error! Failed to load one or more JSON files.`);
       }
-      allProblems = await response.json();
+
+      quizData.grammar = await grammarRes.json();
+      quizData.vocabulary = await vocabularyRes.json();
+      quizData.text = await textRes.json();
 
       // 読み込み成功後の処理
-      loadingMessage.textContent =
-        "学習したいレッスンを選んで、クイズを始めましょう。";
-      const lessons = [...new Set(allProblems.map((p) => p.lesson))];
-      renderLessons(lessons);
+      loadingMessage.innerHTML =
+        "学習したいレッスンを選んで<br />クイズを始めましょう。";
+      quizTypeSelection.classList.remove("hidden"); // 切り替えボタン表示
+      renderLessonButtons(currentQuizType); // 初期表示
       lessonSelection.classList.remove("hidden");
     } catch (error) {
       loadingMessage.textContent =
-        "問題データの読み込みに失敗しました。problems.json を確認してください。";
+        "問題データの読み込みに失敗しました。ファイルを確認してください。";
       loadingMessage.classList.add("text-red-500");
-      console.error("Failed to load problems.json:", error);
+      console.error("Failed to load quiz data:", error);
     }
 
     lessonSelection.addEventListener("click", startQuiz);
+    quizTypeSelection.addEventListener("click", handleQuizTypeChange);
     nextQuestionBtn.addEventListener("click", nextQuestion);
     quitQuizBtn.addEventListener("click", showStartScreen);
 
@@ -60,16 +75,39 @@ document.addEventListener("DOMContentLoaded", () => {
       .addEventListener("click", showStartScreen);
   }
 
+  // --- 問題種別切り替え ---
+  function handleQuizTypeChange(e) {
+    if (e.target.matches("button[data-type]")) {
+      currentQuizType = e.target.dataset.type;
+
+      // ボタンの選択状態を更新
+      quizTypeSelection.querySelectorAll("button").forEach((btn) => {
+        btn.classList.remove("bg-indigo-600", "text-white");
+        btn.classList.add("bg-white", "text-slate-700");
+      });
+      e.target.classList.add("bg-indigo-600", "text-white");
+      e.target.classList.remove("bg-white", "text-slate-700");
+
+      renderLessonButtons(currentQuizType);
+    }
+  }
+
   // --- レッスン表示 ---
-  function renderLessons(lessons) {
+  function renderLessonButtons(quizType) {
     lessonSelection.innerHTML = "";
+    const problems = quizData[quizType];
+    if (!problems || problems.length === 0) {
+      lessonSelection.innerHTML = `<p class="text-slate-500 col-span-full">このカテゴリーには問題がありません。</p>`;
+      return;
+    }
+    const lessons = [...new Set(problems.map((p) => p.lesson))];
     lessons
       .sort((a, b) => a - b)
       .forEach((lesson) => {
         const button = document.createElement("button");
         button.className =
           "p-4 bg-white border-2 border-slate-200 rounded-lg text-lg font-semibold text-slate-700 hover:border-indigo-500 hover:text-indigo-500 transition-all duration-200";
-        button.textContent = lesson;
+        button.textContent = `Lesson ${lesson}`;
         button.dataset.lesson = lesson;
         lessonSelection.appendChild(button);
       });
@@ -79,7 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function startQuiz(e) {
     if (e.target.matches("button[data-lesson]")) {
       currentLesson = Number(e.target.dataset.lesson);
-      const problemsForLesson = allProblems.filter(
+      // 現在選択されている問題種別のデータから問題を取得
+      const problemsForLesson = quizData[currentQuizType].filter(
         (p) => p.lesson === currentLesson
       );
       setupQuiz(problemsForLesson, currentLesson);
@@ -421,13 +460,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const percentage = Math.round((score / currentQuizProblems.length) * 100);
     document.getElementById(
       "result-lesson"
-    ).textContent = `レッスン: ${currentLesson}`;
+    ).textContent = `レッスン: ${currentLesson} (${currentQuizType})`;
     document.getElementById(
       "score-text"
     ).textContent = `${score} / ${currentQuizProblems.length}`;
     document.getElementById(
       "percentage-text"
     ).textContent = `正答率: ${percentage}%`;
+
+    // 「もう一度挑戦」ボタンのイベントリスナーを再設定
+    const retryQuizBtn = document.getElementById("retry-quiz-btn");
+    const newRetryBtn = retryQuizBtn.cloneNode(true);
+    retryQuizBtn.parentNode.replaceChild(newRetryBtn, retryQuizBtn);
+    newRetryBtn.addEventListener("click", () => {
+      const problemsForLesson = quizData[currentQuizType].filter(
+        (p) => p.lesson === currentLesson
+      );
+      setupQuiz(problemsForLesson, currentLesson);
+    });
 
     // 間違えた問題だけを解き直す機能
     const retryIncorrectBtn = document.getElementById("retry-incorrect-btn");

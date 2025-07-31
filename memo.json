@@ -1,0 +1,305 @@
+[
+  {
+    "lesson": 1,
+    "category": "動詞",
+    "topic": "etre の直説法現在形",
+    "type": "form-quiz",
+    "question": "動詞 être (～である) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "je", "answer": "suis" },
+      { "label": "tu", "answer": "es" },
+      { "label": "il/elle/on", "answer": "est" },
+      { "label": "nous", "answer": "sommes" },
+      { "label": "vous", "answer": "êtes" },
+      { "label": "ils/elles", "answer": "sont" }
+    ]
+  },
+  {
+    "lesson": 2,
+    "category": "冠詞・前置詞",
+    "topic": "不定冠詞",
+    "type": "form-quiz",
+    "question": "不定冠詞の全ての形を、性・数に合わせて答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "un" },
+      { "label": "女性単数", "answer": "une" },
+      { "label": "複数", "answer": "des" }
+    ]
+  },
+  {
+    "lesson": 2,
+    "category": "冠詞・前置詞",
+    "topic": "定冠詞",
+    "type": "form-quiz",
+    "question": "定冠詞の全ての形を、性・数に合わせて答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "le" },
+      { "label": "女性単数", "answer": "la" },
+      { "label": "母音・無音のhで始まる単数", "answer": "l'" },
+      { "label": "複数", "answer": "les" }
+    ]
+  },
+  {
+    "lesson": 2,
+    "category": "形容詞・副詞",
+    "topic": "形容詞",
+    "type": "form-quiz",
+    "question": "形容詞 'petit' (小さい) を、名詞の性・数に合わせて正しく変化させてください。",
+    "sub_questions": [
+      { "label": "un garçon (男性単数)", "answer": "petit" },
+      { "label": "une fille (女性単数)", "answer": "petite" },
+      { "label": "des garçons (男性複数)", "answer": "petits" },
+      { "label": "des filles (女性複数)", "answer": "petites" }
+    ]
+  },
+  {
+    "lesson": 3,
+    "category": "動詞",
+    "topic": "avoir の直説法現在形",
+    "type": "form-quiz",
+    "question": "動詞 avoir (持っている) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "j'", "answer": "ai" },
+      { "label": "tu", "answer": "as" },
+      { "label": "il/elle/on", "answer": "a" },
+      { "label": "nous", "answer": "avons" },
+      { "label": "vous", "answer": "avez" },
+      { "label": "ils/elles", "answer": "ont" }
+    ]
+  },
+  {
+    "lesson": 3,
+    "category": "形容詞・副詞",
+    "topic": "指示形容詞",
+    "type": "form-quiz",
+    "question": "指示形容詞の全ての形を、名詞の性・数に合わせて答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "ce" },
+      { "label": "男性単数（母音・無音hの前）", "answer": "cet" },
+      { "label": "女性単数", "answer": "cette" },
+      { "label": "複数", "answer": "ces" }
+    ]
+  },
+  {
+    "lesson": 3,
+    "category": "疑問詞",
+    "topic": "疑問形容詞 quel",
+    "type": "form-quiz",
+    "question": "疑問形容詞 'quel' の全ての形を、名詞の性・数に合わせて答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "quel" },
+      { "label": "女性単数", "answer": "quelle" },
+      { "label": "男性複数", "answer": "quels" },
+      { "label": "女性複数", "answer": "quelles" }
+    ]
+  },
+  {
+    "lesson": 3,
+    "category": "代名詞",
+    "topic": "人称代名詞強勢形",
+    "type": "form-quiz",
+    "question": "人称代名詞の強勢形を全て答えてください。",
+    "sub_questions": [
+      { "label": "je", "answer": "moi" },
+      { "label": "tu", "answer": "toi" },
+      { "label": "il", "answer": "lui" },
+      { "label": "elle", "answer": "elle" },
+      { "label": "nous", "answer": "nous" },
+      { "label": "vous", "answer": "vous" },
+      { "label": "ils", "answer": "eux" },
+      { "label": "elles", "answer": "elles" }
+    ]
+  },
+  {
+    "lesson": 4,
+    "category": "動詞",
+    "topic": "第一群規則動詞の直説法現在形",
+    "type": "form-quiz",
+    "question": "第一群規則動詞 'parler' (話す) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "je", "answer": "parle" },
+      { "label": "tu", "answer": "parles" },
+      { "label": "il/elle/on", "answer": "parle" },
+      { "label": "nous", "answer": "parlons" },
+      { "label": "vous", "answer": "parlez" },
+      { "label": "ils/elles", "answer": "parlent" }
+    ]
+  },
+  {
+    "lesson": 5,
+    "category": "動詞",
+    "topic": "aller, venir の直説法現在形",
+    "type": "form-quiz",
+    "question": "動詞 aller (行く) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "je", "answer": "vais" },
+      { "label": "tu", "answer": "vas" },
+      { "label": "il/elle/on", "answer": "va" },
+      { "label": "nous", "answer": "allons" },
+      { "label": "vous", "answer": "allez" },
+      { "label": "ils/elles", "answer": "vont" }
+    ]
+  },
+  {
+    "lesson": 5,
+    "category": "動詞",
+    "topic": "aller, venir の直説法現在形",
+    "type": "form-quiz",
+    "question": "動詞 venir (来る) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "je", "answer": "viens" },
+      { "label": "tu", "answer": "viens" },
+      { "label": "il/elle/on", "answer": "vient" },
+      { "label": "nous", "answer": "venons" },
+      { "label": "vous", "answer": "venez" },
+      { "label": "ils/elles", "answer": "viennent" }
+    ]
+  },
+  {
+    "lesson": 5,
+    "category": "冠詞・前置詞",
+    "topic": "à, de と定冠詞の縮約",
+    "type": "form-quiz",
+    "question": "前置詞 à, de と定冠詞 le, les の縮約形を全て答えてください。",
+    "sub_questions": [
+      { "label": "à + le", "answer": "au" },
+      { "label": "à + les", "answer": "aux" },
+      { "label": "de + le", "answer": "du" },
+      { "label": "de + les", "answer": "des" }
+    ]
+  },
+  {
+    "lesson": 6,
+    "category": "動詞",
+    "topic": "命令法",
+    "type": "form-quiz",
+    "question": "動詞 'parler' の命令法（肯定）の形を全て答えてください。",
+    "sub_questions": [
+      { "label": "tu", "answer": "Parle" },
+      { "label": "nous", "answer": "Parlons" },
+      { "label": "vous", "answer": "Parlez" }
+    ]
+  },
+  {
+    "lesson": 6,
+    "category": "形容詞・副詞",
+    "topic": "所有形容詞",
+    "type": "form-quiz",
+    "question": "主語が 'je' の場合の所有形容詞を、名詞の性・数に合わせて全て答えてください。",
+    "sub_questions": [
+      { "label": "男性単数 (livre)", "answer": "mon" },
+      { "label": "女性単数 (voiture)", "answer": "ma" },
+      { "label": "複数 (amis)", "answer": "mes" }
+    ]
+  },
+  {
+    "lesson": 6,
+    "category": "形容詞・副詞",
+    "topic": "所有形容詞",
+    "type": "form-quiz",
+    "question": "主語が 'nous' と 'vous' の場合の所有形容詞を全て答えてください。",
+    "sub_questions": [
+      { "label": "nous (単数名詞)", "answer": "notre" },
+      { "label": "nous (複数名詞)", "answer": "nos" },
+      { "label": "vous (単数名詞)", "answer": "votre" },
+      { "label": "vous (複数名詞)", "answer": "vos" }
+    ]
+  },
+  {
+    "lesson": 6,
+    "category": "動詞",
+    "topic": "第二群規則動詞の直説法現在形",
+    "type": "form-quiz",
+    "question": "第二群規則動詞 'finir' (終える) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "je", "answer": "finis" },
+      { "label": "tu", "answer": "finis" },
+      { "label": "il/elle/on", "answer": "finit" },
+      { "label": "nous", "answer": "finissons" },
+      { "label": "vous", "answer": "finissez" },
+      { "label": "ils/elles", "answer": "finissent" }
+    ]
+  },
+  {
+    "lesson": 7,
+    "category": "代名詞",
+    "topic": "補語人称代名詞",
+    "type": "form-quiz",
+    "question": "直接目的語人称代名詞を全て答えてください。",
+    "sub_questions": [
+      { "label": "me (私を)", "answer": "me" },
+      { "label": "te (君を)", "answer": "te" },
+      { "label": "le (彼を、それを)", "answer": "le" },
+      { "label": "la (彼女を、それを)", "answer": "la" },
+      { "label": "nous (私たちを)", "answer": "nous" },
+      { "label": "vous (あなた/たちを)", "answer": "vous" },
+      { "label": "les (彼ら/彼女ら/それらを)", "answer": "les" }
+    ]
+  },
+  {
+    "lesson": 7,
+    "category": "代名詞",
+    "topic": "補語人称代名詞",
+    "type": "form-quiz",
+    "question": "間接目的語人称代名詞（à + 人）を全て答えてください。",
+    "sub_questions": [
+      { "label": "me (私に)", "answer": "me" },
+      { "label": "te (君に)", "answer": "te" },
+      { "label": "lui (彼/彼女に)", "answer": "lui" },
+      { "label": "nous (私たちに)", "answer": "nous" },
+      { "label": "vous (あなた/たちに)", "answer": "vous" },
+      { "label": "leur (彼ら/彼女らに)", "answer": "leur" }
+    ]
+  },
+  {
+    "lesson": 8,
+    "category": "動詞",
+    "topic": "代名動詞の直説法現在形",
+    "type": "form-quiz",
+    "question": "代名動詞 'se lever' (起きる) の直説法現在の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "je", "answer": "me lève" },
+      { "label": "tu", "answer": "te lèves" },
+      { "label": "il/elle/on", "answer": "se lève" },
+      { "label": "nous", "answer": "nous levons" },
+      { "label": "vous", "answer": "vous levez" },
+      { "label": "ils/elles", "answer": "se lèvent" }
+    ]
+  },
+  {
+    "lesson": 8,
+    "category": "冠詞・前置詞",
+    "topic": "部分冠詞",
+    "type": "form-quiz",
+    "question": "数えられない名詞の「いくらかの量」を示す部分冠詞を、性・数に合わせて全て答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "du" },
+      { "label": "女性単数", "answer": "de la" },
+      { "label": "母音・無音のhで始まる単数", "answer": "de l'" },
+      { "label": "複数（desとの区別が重要）", "answer": "des" }
+    ]
+  },
+  {
+    "lesson": 8,
+    "category": "冠詞・前置詞",
+    "topic": "不定冠詞",
+    "type": "fill-in-the-blank",
+    "question": "否定文において、不定冠詞 'un, une, des' は通常どの単語に変わりますか？空欄にその単語を入れてください。: Je n'ai pas _______ stylo.",
+    "answer": "de"
+  },
+  {
+    "lesson": 10,
+    "category": "動詞",
+    "topic": "直説法半過去（未完了）",
+    "type": "form-quiz",
+    "question": "動詞 'parler' の半過去の活用を全て答えてください。",
+    "sub_questions": [
+      { "label": "je", "answer": "parlais" },
+      { "label": "tu", "answer": "parlais" },
+      { "label": "il/elle/on", "answer": "parlait" },
+      { "label": "nous", "answer": "parlions" },
+      { "label": "vous", "answer": "parliez" },
+      { "label": "ils/elles", "answer": "parlaient" }
+    ]
+  }
+]

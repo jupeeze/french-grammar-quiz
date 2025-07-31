@@ -1,0 +1,335 @@
+[
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（疑問文）",
+    "type": "scramble",
+    "question": "明日の夜は空いてますか？",
+    "words": ["Tu", "libre", "seras", "demain", "soir"],
+    "answer": "Tu seras libre demain soir"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（否定文）",
+    "type": "scramble",
+    "question": "いいえ、私は友達に招待されました。",
+    "words": ["invitée", "par", "amies", "des", "je", "suis", "Non", ","],
+    "answer": "Non , je suis invitée par des amies"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "私たちは一緒に夕食をとります。",
+    "words": ["Nous", "dînerons", "ensemble"],
+    "answer": "Nous dînerons ensemble"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（疑問文）",
+    "type": "scramble",
+    "question": "あなたは何をしますか？",
+    "words": ["Et", "toi", "qu'est-ce", "que", "tu", "feras", ","],
+    "answer": "Et toi , qu'est-ce que tu feras"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "私はJ-popのコンサートに行きます。",
+    "words": ["J'irai", "à", "un", "concert", "de", "musique", "japonaise"],
+    "answer": "J'irai à un concert de musique japonaise"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "明日は最後の日です。",
+    "words": ["Demain", ",", "ce", "sera", "le", "dernier", "jour"],
+    "answer": "Demain , ce sera le dernier jour"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "ああ、私はそれを知りませんでした。",
+    "words": ["Ah", ",", "je", "ne", "le", "savais", "pas"],
+    "answer": "Ah , je ne le savais pas"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "私たちは一緒に行かなければなりません。",
+    "words": ["On", "doit", "y", "aller", "ensemble"],
+    "answer": "On doit y aller ensemble"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（疑問文）",
+    "type": "scramble",
+    "question": "コンサートは何時に始まりますか？",
+    "words": ["Le", "concert", "commencera", "à", "quelle", "heure"],
+    "answer": "Le concert commencera à quelle heure"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "9時です。",
+    "words": ["À", "neuf", "heures"],
+    "answer": "À neuf heures"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "コンサートホールは8時半に開きます。",
+    "words": [
+      "La",
+      "salle",
+      "de",
+      "concert",
+      "sera",
+      "ouverte",
+      "à",
+      "huit",
+      "heures",
+      "et",
+      "demie"
+    ],
+    "answer": "La salle de concert sera ouverte à huit heures et demie"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（",
+    "type": "scramble",
+    "question": "私は8時に自由です。",
+    "words": ["Je", "serai", "libre", "à", "huit", "heures"],
+    "answer": "Je serai libre à huit heures"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "だから、私は行けます。",
+    "words": ["Je", "peux", "donc", "y", "aller"],
+    "answer": "Je peux donc y aller"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "いいね！入り口で会いましょうか？ オーケー。",
+    "words": [
+      "C'est",
+      "bien",
+      "!",
+      "On",
+      "se",
+      "verra",
+      "à",
+      "l'entrée",
+      "?",
+      "D'accord"
+    ],
+    "answer": "C'est bien ! On se verra à l'entrée ? D'accord"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "9時15分に会いましょう。",
+    "words": [
+      "Tu",
+      "peux",
+      "venir",
+      "à",
+      "neuf",
+      "heures",
+      "moins",
+      "le",
+      "quart"
+    ],
+    "answer": "Tu peux venir à neuf heures moins le quart"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "私はチケットを前もって買います。",
+    "words": ["J'achèterai", "ton", "ticket", "avant"],
+    "answer": "J'achèterai ton ticket avant"
+  },
+  {
+    "lesson": 11,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "ありがとう。優しいですね。",
+    "words": ["Merci", ".", "C'est", "gentil"],
+    "answer": "Merci . C'est gentil"
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（疑問文）",
+    "type": "scramble",
+    "question": "何を選びましたか？",
+    "words": ["Qu'est-ce", "que", "tu", "as", "choisi"],
+    "answer": "Qu'est-ce que tu as choisi"
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "このバゲットを選びました。",
+    "words": ["J'ai", "choisi", "cette", "baguette"],
+    "answer": "J'ai choisi cette baguette."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "なるほど、私はあれが好きです。",
+    "words": ["Moi", "je", "préfère", "celle-là"],
+    "answer": "Moi, je préfère celle-là."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "それはあなたのより大きいです。",
+    "words": ["Elle", "est", "plus", "grande", "que", "la", "tienne"],
+    "answer": "Elle est plus grande que la tienne."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "私にはこれでいいです。",
+    "words": ["Pour", "moi", ",", "ça", "va", "comme", "ça", "."],
+    "answer": "Pour moi, ça va comme ça."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "私はあなたよりも食べる量が少ないです。",
+    "words": ["Je", "mange", "moins", "que", "toi"],
+    "answer": "Je mange moins que toi."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "これはあれよりも美味しいと思います。",
+    "words": [
+      "Je",
+      "trouve",
+      "que",
+      "celle-ci",
+      "est",
+      "meilleure",
+      "que",
+      "celle-là"
+    ],
+    "answer": "Je trouve que celle-ci est meilleure que celle-là."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "彼らはパリで最も有名なパン屋だと言っています。",
+    "words": [
+      "On",
+      "dit",
+      "que",
+      "c'est",
+      "la",
+      "boulangerie",
+      "la",
+      "plus",
+      "connue",
+      "de",
+      "Paris"
+    ],
+    "answer": "On dit que c'est la boulangerie la plus connue de Paris."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "さらに、フランスで最も古いパン屋の一つです。",
+    "words": [
+      "En",
+      "plus",
+      ",",
+      "c'est",
+      "une",
+      "des",
+      "plus",
+      "vieilles",
+      "boulangeries",
+      "de",
+      "France"
+    ],
+    "answer": "En plus, c'est une des plus vieilles boulangeries de France."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "ああ、そうなんですか！選択肢がたくさんあって、どれも美味しいです。",
+    "words": [
+      "Ah",
+      "bon",
+      "!",
+      "Il",
+      "y",
+      "a",
+      "beaucoup",
+      "de",
+      "choix",
+      "et",
+      "tout",
+      "est",
+      "bon",
+      "."
+    ],
+    "answer": "Ah bon ! Il y a beaucoup de choix et tout est bon."
+  },
+  {
+    "lesson": 12,
+    "category": "文の構造",
+    "topic": "語順（肯定文）",
+    "type": "scramble",
+    "question": "はい、パン屋さんはみんなに愛されています。",
+    "words": ["Oui", ".", "Le", "boulanger", "est", "aimé", "de", "tous", "."],
+    "answer": "Oui. Le boulanger est aimé de tous."
+  }
+]

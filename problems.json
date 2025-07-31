@@ -76,7 +76,7 @@
     "type": "form-quiz",
     "question": "不規則動詞 'devoir' (義務) の直説法現在の活用を全て答えてください。",
     "sub_questions": [
-      { "label": "j'", "answer": "dois" },
+      { "label": "je", "answer": "dois" },
       { "label": "tu", "answer": "dois" },
       { "label": "il/elle/on", "answer": "doit" },
       { "label": "nous", "answer": "devons" },

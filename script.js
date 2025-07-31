@@ -193,14 +193,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const numItems = problem.sub_questions.length;
       const numRows = Math.ceil(numItems / 2);
-      form.className = `grid grid-cols-2 sm:grid-flow-col sm:grid-rows-${numRows} gap-x-6 gap-y-4`;
+      form.className = `grid grid-cols-2 grid-flow-col grid-rows-${numRows} gap-x-6 gap-y-4`;
 
       problem.sub_questions.forEach((sq, index) => {
         const group = document.createElement("div");
         const inputId = `form-quiz-input-${index}`;
         group.innerHTML = `
                   <label for="${inputId}" class="block text-sm font-medium text-slate-700">${sq.label}</label>
-                  <input type="text" id="${inputId}" class="mt-1 block w-full border-2 border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition" autocomplete="off">
+                  <input type="text" id="${inputId}" class="mt-1 block w-full border-2 border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm transition" autocomplete="off">
                   `;
         const input = group.querySelector("input");
         input.addEventListener("focus", () => {

@@ -99,6 +99,19 @@
   },
   {
     "lesson": 12,
+    "category": "形容詞",
+    "topic": "比較級",
+    "type": "form-quiz",
+    "question": "形容詞 'bon' (良い) の比較級を答えてください。",
+    "sub_questions": [
+      { "label": "男性単数", "answer": "meilleur" },
+      { "label": "男性複数", "answer": "meilleurs" },
+      { "label": "女性単数", "answer": "meilleure" },
+      { "label": "女性複数", "answer": "meilleures" }
+    ]
+  },
+  {
+    "lesson": 12,
     "category": "代名詞",
     "topic": "所有代名詞",
     "type": "form-quiz",

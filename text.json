@@ -153,7 +153,7 @@
     "category": "文の構造",
     "topic": "語順（肯定文）",
     "type": "scramble",
-    "question": "9時15分に会いましょう。",
+    "question": "9時15分に来れます。",
     "words": [
       "Tu",
       "peux",
@@ -201,7 +201,7 @@
     "type": "scramble",
     "question": "このバゲットを選びました。",
     "words": ["J'ai", "choisi", "cette", "baguette"],
-    "answer": "J'ai choisi cette baguette."
+    "answer": "J'ai choisi cette baguette"
   },
   {
     "lesson": 12,
@@ -209,8 +209,8 @@
     "topic": "語順（肯定文）",
     "type": "scramble",
     "question": "なるほど、私はあれが好きです。",
-    "words": ["Moi", "je", "préfère", "celle-là"],
-    "answer": "Moi, je préfère celle-là."
+    "words": ["Moi", ",", "je", "préfère", "celle-là"],
+    "answer": "Moi , je préfère celle-là"
   },
   {
     "lesson": 12,
@@ -219,7 +219,7 @@
     "type": "scramble",
     "question": "それはあなたのより大きいです。",
     "words": ["Elle", "est", "plus", "grande", "que", "la", "tienne"],
-    "answer": "Elle est plus grande que la tienne."
+    "answer": "Elle est plus grande que la tienne"
   },
   {
     "lesson": 12,
@@ -227,8 +227,8 @@
     "topic": "語順（肯定文）",
     "type": "scramble",
     "question": "私にはこれでいいです。",
-    "words": ["Pour", "moi", ",", "ça", "va", "comme", "ça", "."],
-    "answer": "Pour moi, ça va comme ça."
+    "words": ["Pour", "moi", ",", "ça", "va", "comme", "ça"],
+    "answer": "Pour moi , ça va comme ça"
   },
   {
     "lesson": 12,
@@ -237,7 +237,7 @@
     "type": "scramble",
     "question": "私はあなたよりも食べる量が少ないです。",
     "words": ["Je", "mange", "moins", "que", "toi"],
-    "answer": "Je mange moins que toi."
+    "answer": "Je mange moins que toi"
   },
   {
     "lesson": 12,
@@ -255,7 +255,7 @@
       "que",
       "celle-là"
     ],
-    "answer": "Je trouve que celle-ci est meilleure que celle-là."
+    "answer": "Je trouve que celle-ci est meilleure que celle-là"
   },
   {
     "lesson": 12,
@@ -276,7 +276,7 @@
       "de",
       "Paris"
     ],
-    "answer": "On dit que c'est la boulangerie la plus connue de Paris."
+    "answer": "On dit que c'est la boulangerie la plus connue de Paris"
   },
   {
     "lesson": 12,
@@ -297,7 +297,7 @@
       "de",
       "France"
     ],
-    "answer": "En plus, c'est une des plus vieilles boulangeries de France."
+    "answer": "En plus , c'est une des plus vieilles boulangeries de France"
   },
   {
     "lesson": 12,
@@ -318,10 +318,9 @@
       "et",
       "tout",
       "est",
-      "bon",
-      "."
+      "bon"
     ],
-    "answer": "Ah bon ! Il y a beaucoup de choix et tout est bon."
+    "answer": "Ah bon ! Il y a beaucoup de choix et tout est bon"
   },
   {
     "lesson": 12,
@@ -329,7 +328,7 @@
     "topic": "語順（肯定文）",
     "type": "scramble",
     "question": "はい、パン屋さんはみんなに愛されています。",
-    "words": ["Oui", ".", "Le", "boulanger", "est", "aimé", "de", "tous", "."],
-    "answer": "Oui. Le boulanger est aimé de tous."
+    "words": ["Oui", ".", "Le", "boulanger", "est", "aimé", "de", "tous"],
+    "answer": "Oui . Le boulanger est aimé de tous"
   }
 ]

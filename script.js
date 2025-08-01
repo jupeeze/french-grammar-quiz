@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     quitQuizBtn.addEventListener("click", showStartScreen);
 
     document.getElementById("retry-quiz-btn").addEventListener("click", () => {
-      const problemsForLesson = allProblems.filter(
+      const problemsForLesson = quizData[currentQuizType].filter(
         (p) => p.lesson === currentLesson
       );
       setupQuiz(problemsForLesson, currentLesson);
@@ -73,6 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document
       .getElementById("back-to-home-btn")
       .addEventListener("click", showStartScreen);
+  }
+
+  // --- 画面切り替え ---
+  function showScreen(screenToShow) {
+    [startScreen, quizScreen, resultScreen].forEach((screen) => {
+      screen.classList.add("hidden");
+    });
+    screenToShow.classList.remove("hidden");
   }
 
   // --- 問題種別切り替え ---
@@ -96,6 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderLessonButtons(quizType) {
     lessonSelection.innerHTML = "";
     const problems = quizData[quizType];
+    const progressData = JSON.parse(localStorage.getItem("quizProgress")) || {};
+
     if (!problems || problems.length === 0) {
       lessonSelection.innerHTML = `<p class="text-slate-500 col-span-full">このカテゴリーには問題がありません。</p>`;
       return;
@@ -106,17 +116,30 @@ document.addEventListener("DOMContentLoaded", () => {
       .forEach((lesson) => {
         const button = document.createElement("button");
         button.className =
-          "p-4 bg-white border-2 border-slate-200 rounded-lg text-lg font-semibold text-slate-700 hover:border-indigo-500 hover:text-indigo-500 transition-all duration-200";
-        button.textContent = `Lesson ${lesson}`;
+          "p-4 bg-white border-2 border-slate-200 rounded-lg text-lg font-semibold text-slate-700 hover:border-indigo-500 hover:text-indigo-500 transition-all duration-200 flex flex-col items-center justify-center";
         button.dataset.lesson = lesson;
+
+        const lessonProgress =
+          progressData[quizType] && progressData[quizType][lesson]
+            ? progressData[quizType][lesson]
+            : { score: 0, total: 0, percentage: 0 };
+
+        button.innerHTML = `
+            <span>Lesson ${lesson}</span>
+            <div class="mt-2 w-full bg-slate-200 rounded-full h-2.5">
+                <div class="bg-indigo-500 h-2.5 rounded-full" style="width: ${lessonProgress.percentage}%"></div>
+            </div>
+            <span class="text-xs text-slate-500 mt-1">${lessonProgress.percentage}%</span>
+        `;
         lessonSelection.appendChild(button);
       });
   }
 
   // --- クイズ開始 ---
   function startQuiz(e) {
-    if (e.target.matches("button[data-lesson]")) {
-      currentLesson = Number(e.target.dataset.lesson);
+    const button = e.target.closest("button[data-lesson]");
+    if (button) {
+      currentLesson = Number(button.dataset.lesson);
       // 現在選択されている問題種別のデータから問題を取得
       const problemsForLesson = quizData[currentQuizType].filter(
         (p) => p.lesson === currentLesson
@@ -133,10 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lastFocusedInput = null;
     incorrectAnswers = []; // クイズ開始時に間違えた問題リストをリセット
 
-    startScreen.classList.add("hidden");
-    resultScreen.classList.add("hidden");
-    quizScreen.classList.remove("hidden");
-
+    showScreen(quizScreen);
     displayProblem();
   }
 
@@ -218,22 +238,18 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.onclick = () => checkAnswer(null);
       answerOptions.appendChild(submitBtn);
     } else if (problem.type === "scramble") {
-      // ★★★ここからがスクランブル問題の追加機能★★★
-      // スクランブル問題用のUIを動的に生成
       answerOptions.innerHTML = `
         <div class="p-4 mb-4 text-center bg-slate-100 rounded-lg min-h-[60px] text-xl font-medium" id="scramble-answer-area"></div>
         <div class="flex flex-wrap justify-center gap-3 mb-4" id="scramble-words-container"></div>
         <div class="flex justify-center gap-3 mb-4" id="scramble-controls"></div>
       `;
 
-      // 生成した要素を取得
       const answerArea = document.getElementById("scramble-answer-area");
       const wordsContainer = document.getElementById(
         "scramble-words-container"
       );
       const controlsContainer = document.getElementById("scramble-controls");
 
-      // 単語ボタンをシャッフルして表示
       problem.words
         .sort(() => 0.5 - Math.random())
         .forEach((word) => {
@@ -242,17 +258,15 @@ document.addEventListener("DOMContentLoaded", () => {
           button.className =
             "word-button px-4 py-2 bg-white border-2 border-slate-300 rounded-lg text-lg font-semibold hover:bg-indigo-50 hover:border-indigo-400 transition-all disabled:opacity-40 disabled:cursor-not-allowed";
           button.addEventListener("click", () => {
-            // 回答エリアに単語を追加（先頭以外はスペースを入れる）
             if (answerArea.textContent.length > 0) {
               answerArea.textContent += " ";
             }
             answerArea.textContent += word;
-            button.disabled = true; // ボタンを無効化する
+            button.disabled = true;
           });
           wordsContainer.appendChild(button);
         });
 
-      // 操作ボタン（クリア、一単語削除）
       const clearBtn = document.createElement("button");
       clearBtn.textContent = "やり直す";
       clearBtn.className =
@@ -261,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
         answerArea.textContent = "";
         wordsContainer
           .querySelectorAll(".word-button")
-          .forEach((btn) => (btn.disabled = false)); // 全ての単語ボタンを有効化
+          .forEach((btn) => (btn.disabled = false));
       };
       controlsContainer.appendChild(clearBtn);
 
@@ -275,28 +289,25 @@ document.addEventListener("DOMContentLoaded", () => {
           const lastWord = currentWords.pop();
           answerArea.textContent = currentWords.join(" ");
 
-          // 無効化されたボタンの中から、最後の単語に一致するものを探し、有効化する
           const wordButtons = wordsContainer.querySelectorAll(
             ".word-button:disabled"
           );
           for (const btn of Array.from(wordButtons).reverse()) {
             if (btn.textContent === lastWord) {
               btn.disabled = false;
-              break; // 一つ有効化したらループを抜ける
+              break;
             }
           }
         }
       };
       controlsContainer.appendChild(backspaceBtn);
 
-      // 回答ボタン
       const submitBtn = document.createElement("button");
       submitBtn.textContent = "回答する";
       submitBtn.className =
         "mt-3 w-full py-3 px-6 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 transition-colors";
       submitBtn.onclick = () => checkAnswer(answerArea.textContent);
       answerOptions.appendChild(submitBtn);
-      // ★★★ここまでがスクランブル問題の追加機能★★★
     }
   }
 
@@ -375,7 +386,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       isCorrect = allCorrect;
     } else if (problem.type === "scramble") {
-      // ★修正: スクランブル問題の場合、大文字・小文字を区別して完全一致で判定
       isCorrect = userAnswer.trim() === problem.answer.trim();
     } else {
       isCorrect =
@@ -386,7 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
       score++;
       showFeedback(true, "正解！");
     } else {
-      // 間違えた問題と回答を記録
       const incorrectData = { problem: problem };
       if (problem.type === "form-quiz") {
         incorrectData.userAnswers = userAnswersForForm;
@@ -452,10 +461,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- 結果表示 ---
+  // --- 結果保存・表示 ---
+  function saveProgress() {
+    const progressData = JSON.parse(localStorage.getItem("quizProgress")) || {};
+    if (!progressData[currentQuizType]) {
+      progressData[currentQuizType] = {};
+    }
+
+    const lessonKey =
+      typeof currentLesson === "string" && currentLesson.includes("(復習)")
+        ? currentLesson.split(" ")[0]
+        : currentLesson;
+
+    progressData[currentQuizType][lessonKey] = {
+      score: score,
+      total: currentQuizProblems.length,
+      percentage: Math.round((score / currentQuizProblems.length) * 100),
+    };
+    localStorage.setItem("quizProgress", JSON.stringify(progressData));
+  }
+
   function showResult() {
-    quizScreen.classList.add("hidden");
-    resultScreen.classList.remove("hidden");
+    saveProgress(); // 結果を保存
+    showScreen(resultScreen);
 
     const percentage = Math.round((score / currentQuizProblems.length) * 100);
     document.getElementById(
@@ -468,29 +496,29 @@ document.addEventListener("DOMContentLoaded", () => {
       "percentage-text"
     ).textContent = `正答率: ${percentage}%`;
 
-    // 「もう一度挑戦」ボタンのイベントリスナーを再設定
     const retryQuizBtn = document.getElementById("retry-quiz-btn");
     const newRetryBtn = retryQuizBtn.cloneNode(true);
     retryQuizBtn.parentNode.replaceChild(newRetryBtn, retryQuizBtn);
     newRetryBtn.addEventListener("click", () => {
+      const lessonNumber =
+        typeof currentLesson === "string"
+          ? parseInt(currentLesson.split(" ")[0])
+          : currentLesson;
       const problemsForLesson = quizData[currentQuizType].filter(
-        (p) => p.lesson === currentLesson
+        (p) => p.lesson === lessonNumber
       );
       setupQuiz(problemsForLesson, currentLesson);
     });
 
-    // 間違えた問題だけを解き直す機能
     const retryIncorrectBtn = document.getElementById("retry-incorrect-btn");
     if (incorrectAnswers.length > 0) {
       retryIncorrectBtn.classList.remove("hidden");
 
-      // 古いイベントリスナーを削除してから新しいものを追加
       const newBtn = retryIncorrectBtn.cloneNode(true);
       retryIncorrectBtn.parentNode.replaceChild(newBtn, retryIncorrectBtn);
 
       newBtn.addEventListener("click", () => {
         const incorrectProblems = incorrectAnswers.map((item) => item.problem);
-        // 復習クイズ用の特別なレッスン名を付ける
         const reviewLessonName =
           typeof currentLesson === "string" && currentLesson.includes("(復習)")
             ? currentLesson
@@ -501,11 +529,10 @@ document.addEventListener("DOMContentLoaded", () => {
       retryIncorrectBtn.classList.add("hidden");
     }
 
-    // 間違えた問題のフィードバックを表示する処理
     const feedbackContainer = document.getElementById(
       "incorrect-feedback-container"
     );
-    feedbackContainer.innerHTML = ""; // コンテナをクリア
+    feedbackContainer.innerHTML = "";
 
     if (incorrectAnswers.length > 0) {
       const title = document.createElement("h3");
@@ -539,7 +566,6 @@ document.addEventListener("DOMContentLoaded", () => {
           });
           feedbackHTML += "</ul>";
         } else {
-          // fill-in-the-blank と scramble の場合
           feedbackHTML += `
               <p class="mt-2">
                 <span class="font-medium">あなたの回答:</span>
@@ -559,9 +585,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showStartScreen() {
-    resultScreen.classList.add("hidden");
-    quizScreen.classList.add("hidden");
-    startScreen.classList.remove("hidden");
+    renderLessonButtons(currentQuizType); // 解答状況を更新して表示
+    showScreen(startScreen);
   }
 
   // --- アプリケーション開始 ---

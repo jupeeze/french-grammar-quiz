@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>フランス語 実践</title>
-    <!-- Tailwind CSSの読み込み -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts (Inter & Noto Sans JP) の読み込み -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -52,20 +50,11 @@
           問題データを読み込んでいます...
         </p>
         <div
-          id="category-selection"
-          class="hidden mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        >
-          <!-- カテゴリーボタンはJSで生成 -->
-        </div>
-        <div
           id="lesson-selection"
           class="hidden mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        >
-          <!-- レッスンボタンはJSで生成 -->
-        </div>
+        ></div>
       </div>
 
-      <!-- クイズ画面 -->
       <div
         id="quiz-screen"
         class="hidden bg-white p-6 sm:p-8 rounded-2xl shadow-lg"
@@ -93,13 +82,9 @@
           <p id="question-text" class="text-xl leading-relaxed"></p>
         </div>
 
-        <div id="answer-options" class="space-y-3">
-          <!-- 回答選択肢 or 入力欄 -->
-        </div>
+        <div id="answer-options" class="space-y-3"></div>
 
-        <div id="feedback-container" class="mt-6 min-h-[80px]">
-          <!-- 正誤フィードバック -->
-        </div>
+        <div id="feedback-container" class="mt-6 min-h-[80px]"></div>
 
         <button
           id="next-question-btn"
@@ -109,7 +94,6 @@
         </button>
       </div>
 
-      <!-- 結果画面 -->
       <div
         id="result-screen"
         class="hidden bg-white p-8 rounded-2xl shadow-lg text-center"

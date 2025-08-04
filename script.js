@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // --- DOM要素 ---
   const appContainer = document.getElementById("app-container");
+  let lastFocusedInput = null;
 
   // --- 状態管理 ---
   const state = {
@@ -13,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
     incorrectAnswers: [],
     activeScreen: "loading", // 'loading', 'start', 'quiz', 'result'
     progress: {},
+    feedback: null, // { isCorrect: boolean, message: string }
+    isAnswered: false, // 回答済みかどうかのフラグ
   };
 
   // --- 状態更新関数 ---
@@ -21,11 +24,49 @@ document.addEventListener("DOMContentLoaded", () => {
     render();
   };
 
+  // --- ヘルパー関数 ---
+  const createAccentButtons = (container) => {
+    const accentChars = [
+      "à",
+      "â",
+      "é",
+      "è",
+      "ê",
+      "ë",
+      "î",
+      "ï",
+      "ô",
+      "û",
+      "ù",
+      "ç",
+    ];
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "mt-3 flex flex-wrap justify-center gap-2";
+    accentChars.forEach((char) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className =
+        "w-10 h-10 bg-slate-100 text-slate-800 rounded-md hover:bg-slate-200 transition-colors text-lg font-mono";
+      button.textContent = char;
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (lastFocusedInput) {
+          const start = lastFocusedInput.selectionStart;
+          const end = lastFocusedInput.selectionEnd;
+          const text = lastFocusedInput.value;
+          lastFocusedInput.value =
+            text.substring(0, start) + char + text.substring(end);
+          lastFocusedInput.focus();
+          lastFocusedInput.setSelectionRange(start + 1, start + 1);
+        }
+      });
+      buttonContainer.appendChild(button);
+    });
+    container.appendChild(buttonContainer);
+  };
+
   // --- コンポーネント ---
 
-  /**
-   * クイズ種別選択ボタン コンポーネント
-   */
   const QuizTypeSelection = (props) => {
     const { currentQuizType } = props;
     const container = document.createElement("div");
@@ -121,38 +162,95 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /**
-   * クイズ画面 コンポーネント (長いため主要部分のみ抜粋)
-   * ※ script.js内の displayProblem, checkAnswer, nextQuestion などのロジックを統合
+   * クイズ画面 コンポーネント
    */
   const QuizScreen = (props) => {
-    // (この部分は長くなるため、元のscript.jsのロジックを参考に構築します)
-    // QuizScreenは内部で問題表示、回答チェック、次の問題への遷移を管理する
-    // 状態はすべてpropsとして受け取る
+    const { currentProblems, currentProblemIndex, feedback, isAnswered } =
+      props;
+    const problem = currentProblems[currentProblemIndex];
+
     const container = document.createElement("div");
     container.id = "quiz-screen";
     container.className = "bg-white p-6 sm:p-8 rounded-2xl shadow-lg";
 
-    feedbackContainer.innerHTML = "";
-    nextQuestionBtn.classList.add("hidden");
+    // --- 回答チェック処理 ---
+    const checkAnswer = (userAnswer) => {
+      if (isAnswered) return;
 
-    const problem = currentQuizProblems[currentProblemIndex];
-    quizTopic.textContent = problem.topic;
-    progressIndicator.textContent = `問題 ${currentProblemIndex + 1} / ${
-      currentQuizProblems.length
-    }`;
-    questionText.textContent = problem.question;
+      let isCorrect = false;
+      let userAnswersForForm = [];
 
-    answerOptions.innerHTML = "";
-    if (problem.type === "multiple-choice") {
-      problem.options.forEach((option) => {
-        const button = document.createElement("button");
-        button.className =
-          "w-full text-left p-4 bg-white border-2 border-slate-300 rounded-lg hover:bg-indigo-50 hover:border-indigo-400 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500";
-        button.textContent = option;
-        button.addEventListener("click", () => checkAnswer(option));
-        answerOptions.appendChild(button);
+      if (problem.type === "form-quiz") {
+        let allCorrect = true;
+        const inputs = container.querySelectorAll("input");
+        problem.sub_questions.forEach((sq, index) => {
+          const input = inputs[index];
+          userAnswersForForm.push(input.value);
+          if (
+            input.value.trim().toLowerCase() !== sq.answer.trim().toLowerCase()
+          ) {
+            allCorrect = false;
+          }
+        });
+        isCorrect = allCorrect;
+      } else if (problem.type === "scramble") {
+        isCorrect = userAnswer.trim() === problem.answer.trim();
+      } else {
+        isCorrect =
+          userAnswer.trim().toLowerCase() ===
+          problem.answer.trim().toLowerCase();
+      }
+
+      const newScore = isCorrect ? state.score + 1 : state.score;
+      let newIncorrectAnswers = [...state.incorrectAnswers];
+      let feedbackMessage = `不正解... 正解は「${problem.answer}」です。`;
+
+      if (isCorrect) {
+        feedbackMessage = "正解！";
+      } else {
+        const incorrectData = { problem };
+        if (problem.type === "form-quiz") {
+          incorrectData.userAnswers = userAnswersForForm;
+        } else {
+          incorrectData.userAnswer = userAnswer;
+        }
+        newIncorrectAnswers.push(incorrectData);
+        if (problem.type === "form-quiz") {
+          feedbackMessage = "不正解... 赤い箇所を確認してください。";
+        }
+      }
+
+      setState({
+        score: newScore,
+        incorrectAnswers: newIncorrectAnswers,
+        isAnswered: true,
+        feedback: { isCorrect, message: feedbackMessage },
       });
-    } else if (problem.type === "fill-in-the-blank") {
+    };
+
+    // --- UI構築 ---
+    container.innerHTML = `
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <p class="text-sm font-semibold text-indigo-600">${problem.topic}</p>
+          <p class="text-lg font-bold text-slate-700">問題 ${
+            currentProblemIndex + 1
+          } / ${currentProblems.length}</p>
+        </div>
+        <button id="quit-quiz-btn" class="text-sm text-slate-500 hover:text-red-600 transition-colors">終了する</button>
+      </div>
+      <div class="mb-6">
+        <p class="text-xl leading-relaxed">${problem.question}</p>
+      </div>
+      <div id="answer-options" class="space-y-3"></div>
+      <div id="feedback-container" class="mt-6 min-h-[80px]"></div>
+      <button id="next-question-btn" class="hidden mt-4 w-full py-3 px-6 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600">次へ</button>
+      `;
+
+    const answerOptionsContainer = container.querySelector("#answer-options");
+
+    // --- 問題タイプ別の回答欄を生成 ---
+    if (problem.type === "fill-in-the-blank") {
       const input = document.createElement("input");
       input.type = "text";
       input.className =
@@ -279,84 +377,72 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.onclick = () => checkAnswer(answerArea.textContent);
       answerOptions.appendChild(submitBtn);
     }
+    // --- イベントリスナー設定 ---
+    container.querySelector("#quit-quiz-btn").onclick = () => {
+      loadProgress();
+      setState({ activeScreen: "start" });
+    };
 
-    const problem = currentQuizProblems[currentProblemIndex];
-    let isCorrect = false;
-    let userAnswersForForm = []; // form-quizのユーザー回答を保存
+    const nextButton = container.querySelector("#next-question-btn");
+    nextButton.onclick = () => {
+      if (currentProblemIndex + 1 < currentProblems.length) {
+        setState({
+          currentProblemIndex: state.currentProblemIndex + 1,
+          isAnswered: false,
+          feedback: null,
+        });
+      } else {
+        saveProgress();
+        setState({ activeScreen: "result" });
+      }
+    };
 
-    if (problem.type === "form-quiz") {
-      let allCorrect = true;
-      const inputs = answerOptions.querySelectorAll("input");
-      problem.sub_questions.forEach((sq, index) => {
-        const input = inputs[index];
-        userAnswersForForm.push(input.value); // ユーザーの回答を記録
-        if (
-          input.value.trim().toLowerCase() === sq.answer.trim().toLowerCase()
-        ) {
-          input.classList.remove("border-red-500");
-          input.classList.add("border-green-500", "bg-green-50");
-        } else {
-          allCorrect = false;
-          input.classList.remove("border-green-500");
-          input.classList.add("border-red-500", "bg-red-50");
+    // --- 回答後のフィードバック表示 ---
+    if (isAnswered) {
+      const feedbackContainer = container.querySelector("#feedback-container");
+      const feedbackEl = document.createElement("div");
+      feedbackEl.className = `p-4 rounded-lg font-bold text-center ${
+        feedback.isCorrect
+          ? "bg-green-100 text-green-700 feedback-correct"
+          : "bg-red-100 text-red-700 feedback-incorrect"
+      }`;
+      feedbackEl.textContent = feedback.message;
+      feedbackContainer.appendChild(feedbackEl);
+      nextButton.classList.remove("hidden");
 
-          if (!input.parentElement.querySelector(".hint-text")) {
+      // 入力フィールドを無効化し、正誤を表示
+      if (problem.type === "form-quiz") {
+        const inputs = container.querySelectorAll("input");
+        const userAnswers =
+          state.incorrectAnswers.find((ia) => ia.problem === problem)
+            ?.userAnswers || problem.sub_questions.map((sq) => sq.answer);
+        problem.sub_questions.forEach((sq, index) => {
+          const input = inputs[index];
+          input.disabled = true;
+          if (
+            userAnswers[index].trim().toLowerCase() ===
+            sq.answer.trim().toLowerCase()
+          ) {
+            input.classList.add("border-green-500", "bg-green-50");
+          } else {
+            input.classList.add("border-red-500", "bg-red-50");
             const hint = document.createElement("span");
-            hint.className = "text-xs text-red-600 ml-1 mt-1 block hint-text";
+            hint.className = "text-xs text-red-600 ml-1 mt-1 block";
             hint.textContent = `正解: ${sq.answer}`;
             input.parentElement.appendChild(hint);
           }
-        }
-      });
-      isCorrect = allCorrect;
-    } else if (problem.type === "scramble") {
-      isCorrect = userAnswer.trim() === problem.answer.trim();
-    } else {
-      isCorrect =
-        userAnswer.trim().toLowerCase() === problem.answer.trim().toLowerCase();
-    }
-
-    if (isCorrect) {
-      score++;
-      showFeedback(true, "正解！");
-    } else {
-      const incorrectData = { problem: problem };
-      if (problem.type === "form-quiz") {
-        incorrectData.userAnswers = userAnswersForForm;
-      } else {
-        incorrectData.userAnswer = userAnswer;
+        });
       }
-      incorrectAnswers.push(incorrectData);
-
-      const message =
-        problem.type === "form-quiz"
-          ? "不正解... 赤い箇所を確認してください。"
-          : `不正解... 正解は「${problem.answer}」です。`;
-      showFeedback(false, message);
+      container
+        .querySelectorAll("#answer-options button, #answer-options input")
+        .forEach((el) => (el.disabled = true));
     }
 
-    disableInputs();
-    nextQuestionBtn.classList.remove("hidden");
-    nextQuestionBtn.focus();
-
-    currentProblemIndex++;
-    if (currentProblemIndex < currentQuizProblems.length) {
-      displayProblem();
-    } else {
-      showResult();
-    }
-
-    container.innerHTML = `
-        <p>クイズ画面はここにレンダリングされます。</p>
-        <p>現在の問題: ${props.currentProblemIndex + 1} / ${
-      props.currentProblems.length
-    }</p>
-        <button id="quit-btn">終了</button>
-      `;
-
-    container.querySelector("#quit-btn").onclick = () => {
-      setState({ activeScreen: "start" });
-    };
+    // 最初のレンダリング時にフォーカスを設定
+    setTimeout(() => {
+      const firstInput = container.querySelector('input[type="text"]');
+      if (firstInput) firstInput.focus();
+    }, 100);
 
     return container;
   };
@@ -403,25 +489,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- イベントリスナー ---
     container.querySelector("#retry-quiz-btn").onclick = () => {
-      const problemsForLesson = quizData[currentQuizType].filter(
-        (p) => p.lesson === currentLesson
-      );
-      setupQuiz(problemsForLesson, currentLesson);
+      const problemsForLesson = state.quizData[state.currentQuizType]
+        .filter((p) => p.lesson === state.currentLesson)
+        .sort(() => 0.5 - Math.random());
+      setState({
+        activeScreen: "quiz",
+        currentProblems: problemsForLesson,
+        currentProblemIndex: 0,
+        score: 0,
+        incorrectAnswers: [],
+        isAnswered: false,
+        feedback: null,
+      });
     };
     container.querySelector("#retry-incorrect-btn").onclick = () => {
-      const incorrectProblems = incorrectAnswers.map((item) => item.problem);
-      const reviewLessonName =
-        typeof currentLesson === "string" && currentLesson.includes("(復習)")
-          ? currentLesson
-          : `${currentLesson} (復習)`;
-      setupQuiz(incorrectProblems, reviewLessonName);
+      const incorrectProblems = state.incorrectAnswers.map(
+        (item) => item.problem
+      );
+      const reviewLessonName = `${state.currentLesson} (復習)`;
+      setState({
+        activeScreen: "quiz",
+        currentLesson: reviewLessonName,
+        currentProblems: incorrectProblems,
+        currentProblemIndex: 0,
+        score: 0,
+        incorrectAnswers: [],
+        isAnswered: false,
+        feedback: null,
+      });
     };
     container.querySelector("#back-to-home-btn").onclick = () => {
-      loadProgress(); // progressを更新してスタート画面へ
+      loadProgress();
       setState({ activeScreen: "start" });
     };
-
-    return container;
   };
 
   // --- メインレンダリング関数 ---

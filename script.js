@@ -266,15 +266,15 @@ document.addEventListener("DOMContentLoaded", () => {
           checkAnswer(input.value);
         }
       });
-      answerOptions.appendChild(input);
-      createAccentButtons(answerOptions);
+      answerOptionsContainer.appendChild(input);
+      createAccentButtons(answerOptionsContainer);
 
       const submitBtn = document.createElement("button");
       submitBtn.textContent = "回答する";
       submitBtn.className =
         "mt-3 w-full py-3 px-6 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 transition-colors";
       submitBtn.onclick = () => checkAnswer(input.value);
-      answerOptions.appendChild(submitBtn);
+      answerOptionsContainer.appendChild(submitBtn);
       setTimeout(() => input.focus(), 100);
     } else if (problem.type === "form-quiz") {
       const form = document.createElement("div");
@@ -296,17 +296,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         form.appendChild(group);
       });
-      answerOptions.appendChild(form);
-      createAccentButtons(answerOptions);
+      answerOptionsContainer.appendChild(form);
+      createAccentButtons(answerOptionsContainer);
 
       const submitBtn = document.createElement("button");
       submitBtn.textContent = "判定する";
       submitBtn.className =
         "mt-4 w-full py-3 px-6 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 transition-colors";
       submitBtn.onclick = () => checkAnswer(null);
-      answerOptions.appendChild(submitBtn);
+      answerOptionsContainer.appendChild(submitBtn);
     } else if (problem.type === "scramble") {
-      answerOptions.innerHTML = `
+      answerOptionsContainer.innerHTML = `
         <div class="p-4 mb-4 text-center bg-slate-100 rounded-lg min-h-[60px] text-xl font-medium" id="scramble-answer-area"></div>
         <div class="flex flex-wrap justify-center gap-3 mb-4" id="scramble-words-container"></div>
         <div class="flex justify-center gap-3 mb-4" id="scramble-controls"></div>
@@ -375,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.className =
         "mt-3 w-full py-3 px-6 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-800 transition-colors";
       submitBtn.onclick = () => checkAnswer(answerArea.textContent);
-      answerOptions.appendChild(submitBtn);
+      answerOptionsContainer.appendChild(submitBtn);
     }
     // --- イベントリスナー設定 ---
     container.querySelector("#quit-quiz-btn").onclick = () => {

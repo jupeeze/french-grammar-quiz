@@ -312,11 +312,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="flex justify-center gap-3 mb-4" id="scramble-controls"></div>
       `;
 
-      const answerArea = document.getElementById("scramble-answer-area");
-      const wordsContainer = document.getElementById(
-        "scramble-words-container"
+      const answerArea = container.querySelector("#scramble-answer-area");
+      const wordsContainer = container.querySelector(
+        "#scramble-words-container"
       );
-      const controlsContainer = document.getElementById("scramble-controls");
+      const controlsContainer = container.querySelector("#scramble-controls");
 
       problem.words
         .sort(() => 0.5 - Math.random())

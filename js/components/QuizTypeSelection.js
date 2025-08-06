@@ -1,9 +1,13 @@
-export const QuizTypeSelection = (currentQuizType, onTypeSelect) => {
+export const QuizTypeSelection = (currentQuizType, quizData, onTypeSelect) => {
   const container = document.createElement("div");
   container.className =
     "w-fit mx-auto my-8 bg-white p-2 rounded-xl shadow-md flex gap-2 justify-center";
 
-  const types = ["grammar", "vocabulary", "text", "debug"];
+  const types = ["grammar", "vocabulary", "text"];
+  if (quizData && quizData.debug) {
+    types.push("debug");
+  }
+
   const typeLabels = {
     grammar: "文法",
     vocabulary: "単語",

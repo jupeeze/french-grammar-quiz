@@ -181,7 +181,11 @@ function render() {
       break;
     case "start":
       appContainer.appendChild(
-        QuizTypeSelection(state.currentQuizType, handleTypeSelect)
+        QuizTypeSelection(
+          state.currentQuizType,
+          state.quizData,
+          handleTypeSelect
+        )
       );
       appContainer.appendChild(StartScreen(state, handleLessonSelect));
       break;

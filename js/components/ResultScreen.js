@@ -67,7 +67,12 @@ export const ResultScreen = (
     `;
   }
 
-  const quizTypeLabels = { grammar: "文法", vocabulary: "単語", text: "本文" };
+  const quizTypeLabels = {
+    grammar: "文法",
+    vocabulary: "単語",
+    text: "本文",
+    debug: "デバッグ",
+  };
 
   container.innerHTML = `
       <h2 class="text-2xl font-bold text-slate-800">クイズ終了！</h2>

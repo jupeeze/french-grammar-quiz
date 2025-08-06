@@ -3,8 +3,13 @@ export const QuizTypeSelection = (currentQuizType, onTypeSelect) => {
   container.className =
     "w-fit mx-auto my-8 bg-white p-2 rounded-xl shadow-md flex gap-2 justify-center";
 
-  const types = ["grammar", "vocabulary", "text"];
-  const typeLabels = { grammar: "文法", vocabulary: "単語", text: "本文" };
+  const types = ["grammar", "vocabulary", "text", "debug"];
+  const typeLabels = {
+    grammar: "文法",
+    vocabulary: "単語",
+    text: "本文",
+    debug: "デバッグ",
+  };
 
   types.forEach((type) => {
     const button = document.createElement("button");

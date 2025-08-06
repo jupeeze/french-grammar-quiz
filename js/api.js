@@ -2,10 +2,11 @@ import { state, setState } from "./state.js";
 
 export async function loadQuizData() {
   try {
-    const [grammarRes, vocabularyRes, textRes] = await Promise.all([
+    const [grammarRes, vocabularyRes, textRes, debugRes] = await Promise.all([
       fetch("data/problems.json"),
       fetch("data/vocabulary.json"),
       fetch("data/text.json"),
+      fetch("data/debug.json"),
     ]);
 
     if (!grammarRes.ok || !vocabularyRes.ok || !textRes.ok) {
@@ -17,6 +18,8 @@ export async function loadQuizData() {
       vocabulary: await vocabularyRes.json(),
       text: await textRes.json(),
     };
+    if (debugRes.ok) quizData.debug = await debugRes.json();
+
     return quizData;
   } catch (error) {
     console.error("Failed to load quiz data:", error);

@@ -1,32 +1,30 @@
 [
   {
     "lesson": 0,
-    "category": "代名詞",
-    "topic": "指示代名詞",
+    "category": "カテゴリ",
+    "topic": "トピック",
     "type": "form-quiz",
-    "question": "単純形の指示代名詞を、性・数に合わせて全て答えてください。",
+    "question": "質問",
     "sub_questions": [
-      { "label": "男性単数", "answer": "celui" },
-      { "label": "男性複数", "answer": "ceux" },
-      { "label": "女性単数", "answer": "celle" },
-      { "label": "女性複数", "answer": "celles" }
+      { "label": "a", "answer": "a" },
+      { "label": "i", "answer": "i" }
     ]
   },
   {
     "lesson": 0,
-    "category": "文の構造",
-    "topic": "語順（疑問文）",
+    "category": "カテゴリ",
+    "topic": "トピック",
     "type": "scramble",
-    "question": "明日の夜は空いてますか？",
-    "words": ["Tu", "libre", "seras", "demain", "soir"],
-    "answer": "Tu seras libre demain soir"
+    "question": "質問",
+    "words": ["a", "i", "u", "e", "o"],
+    "answer": "a i u e o"
   },
   {
     "lesson": 0,
-    "category": "単語",
-    "topic": "基本単語",
+    "category": "カテゴリ",
+    "topic": "トピック",
     "type": "fill-in-the-blank",
-    "question": "自由な、空いている",
-    "answer": "libre"
+    "question": "a",
+    "answer": "a"
   }
 ]

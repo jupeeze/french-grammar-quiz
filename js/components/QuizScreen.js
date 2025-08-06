@@ -205,18 +205,23 @@ export const QuizScreen = (props, onAnswer, onNext, onQuit) => {
       container.querySelector("#scramble-controls").style.display = "none";
     }
 
+    // ユーザーの回答を取得（不正解の場合）
+    const lastIncorrect = incorrectAnswers[incorrectAnswers.length - 1];
+    const wasIncorrect =
+      !feedback.isCorrect && lastIncorrect?.problem === problem;
+
     // 入力フィールドを無効化し、正誤を表示
     if (problem.type === "form-quiz") {
       const inputs = container.querySelectorAll("input");
-      const lastIncorrect = incorrectAnswers[incorrectAnswers.length - 1];
-      const userAnswers =
-        !feedback.isCorrect && lastIncorrect?.problem === problem
-          ? lastIncorrect.userAnswers
-          : problem.sub_questions.map((sq) => sq.answer);
+      const userAnswers = wasIncorrect
+        ? lastIncorrect.userAnswers
+        : problem.sub_questions.map((sq) => sq.answer);
 
       problem.sub_questions.forEach((sq, index) => {
         const input = inputs[index];
         input.disabled = true;
+        input.value = userAnswers[index]; // ★修正点: ユーザーの回答を再表示
+
         if (
           userAnswers[index].trim().toLowerCase() ===
           sq.answer.trim().toLowerCase()
@@ -230,6 +235,18 @@ export const QuizScreen = (props, onAnswer, onNext, onQuit) => {
           input.parentElement.appendChild(hint);
         }
       });
+    } else if (problem.type === "fill-in-the-blank") {
+      const input = container.querySelector("input");
+      if (input) {
+        input.value = wasIncorrect ? lastIncorrect.userAnswer : problem.answer;
+      }
+    } else if (problem.type === "scramble") {
+      const answerArea = container.querySelector("#scramble-answer-area");
+      if (answerArea) {
+        answerArea.textContent = wasIncorrect
+          ? lastIncorrect.userAnswer
+          : problem.answer;
+      }
     }
 
     container

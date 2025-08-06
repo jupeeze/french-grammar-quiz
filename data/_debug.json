@@ -1,0 +1,30 @@
+[
+  {
+    "lesson": 0,
+    "category": "カテゴリ",
+    "topic": "トピック",
+    "type": "form-quiz",
+    "question": "質問",
+    "sub_questions": [
+      { "label": "a", "answer": "a" },
+      { "label": "i", "answer": "i" }
+    ]
+  },
+  {
+    "lesson": 0,
+    "category": "カテゴリ",
+    "topic": "トピック",
+    "type": "scramble",
+    "question": "質問",
+    "words": ["a", "i", "u", "e", "o"],
+    "answer": "a i u e o"
+  },
+  {
+    "lesson": 0,
+    "category": "カテゴリ",
+    "topic": "トピック",
+    "type": "fill-in-the-blank",
+    "question": "a",
+    "answer": "a"
+  }
+]

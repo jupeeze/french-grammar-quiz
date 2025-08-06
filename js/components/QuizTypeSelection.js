@@ -1,6 +1,9 @@
-export const QuizTypeSelection = (currentQuizType, quizData, onTypeSelect) => {
-  const container = document.createElement("div");
-  container.className =
+export const renderQuizTypeSelection = (container, state, onTypeSelect) => {
+  const { currentQuizType, quizData } = state;
+  container.innerHTML = "";
+
+  const wrapper = document.createElement("div");
+  wrapper.className =
     "w-fit mx-auto my-8 bg-white p-2 rounded-xl shadow-md flex gap-2 justify-center";
 
   const types = ["grammar", "vocabulary", "text"];
@@ -25,8 +28,8 @@ export const QuizTypeSelection = (currentQuizType, quizData, onTypeSelect) => {
         : "bg-slate-100 text-slate-700 hover:bg-slate-200"
     }`;
     button.onclick = () => onTypeSelect(type);
-    container.appendChild(button);
+    wrapper.appendChild(button);
   });
 
-  return container;
+  container.appendChild(wrapper);
 };

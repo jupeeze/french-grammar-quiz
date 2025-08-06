@@ -1,31 +1,30 @@
 import { state, setState } from "./state.js";
 import { loadQuizData, loadProgress, saveProgress } from "./api.js";
-import { QuizTypeSelection } from "./components/QuizTypeSelection.js";
-import { StartScreen } from "./components/StartScreen.js";
-import { QuizScreen } from "./components/QuizScreen.js";
-import { ResultScreen } from "./components/ResultScreen.js";
+import { renderQuizTypeSelection } from "./components/QuizTypeSelection.js";
+import { renderStartScreen } from "./components/StartScreen.js";
+import { renderQuizScreen } from "./components/QuizScreen.js";
+import { renderResultScreen } from "./components/ResultScreen.js";
 
 const appContainer = document.getElementById("app-container");
+const templates = {
+  loading: document.getElementById("loading-screen-template"),
+  start: document.getElementById("start-screen-template"),
+  quiz: document.getElementById("quiz-screen-template"),
+  result: document.getElementById("result-screen-template"),
+  error: document.getElementById("error-screen-template"),
+};
 
 // --- イベントハンドラ ---
 
-/**
- * クイズタイプが選択されたときの処理
- * @param {string} type - 選択されたクイズタイプ ('grammar', 'vocabulary', 'text')
- */
 function handleTypeSelect(type) {
   setState({ currentQuizType: type });
   render();
 }
 
-/**
- * レッスンが選択されたときの処理
- * @param {number} lesson - 選択されたレッスン番号
- */
 function handleLessonSelect(lesson) {
   const problemsForLesson = state.quizData[state.currentQuizType]
     .filter((p) => p.lesson === lesson)
-    .sort(() => 0.5 - Math.random()); // 問題をシャッフル
+    .sort(() => 0.5 - Math.random());
 
   setState({
     activeScreen: "quiz",
@@ -40,10 +39,6 @@ function handleLessonSelect(lesson) {
   render();
 }
 
-/**
- * ユーザーが回答を送信したときの処理
- * @param {string | null} userAnswer - ユーザーの回答。form-quizの場合はnull
- */
 function handleAnswer(userAnswer) {
   if (state.isAnswered) return;
 
@@ -63,8 +58,6 @@ function handleAnswer(userAnswer) {
       }
     });
     isCorrect = allCorrect;
-  } else if (problem.type === "scramble") {
-    isCorrect = userAnswer.trim() === problem.answer.trim();
   } else {
     isCorrect =
       userAnswer.trim().toLowerCase() === problem.answer.trim().toLowerCase();
@@ -96,9 +89,6 @@ function handleAnswer(userAnswer) {
   render();
 }
 
-/**
- * 「次へ」ボタンが押されたときの処理
- */
 function handleNextQuestion() {
   if (state.currentProblemIndex + 1 < state.currentProblems.length) {
     setState({
@@ -113,18 +103,12 @@ function handleNextQuestion() {
   render();
 }
 
-/**
- * 「終了する」ボタンが押されたときの処理
- */
 function handleQuit() {
   loadProgress();
   setState({ activeScreen: "start" });
   render();
 }
 
-/**
- * 「もう一度挑戦」ボタンが押されたときの処理
- */
 function handleRetry() {
   const problemsForLesson = state.quizData[state.currentQuizType]
     .filter((p) => p.lesson === state.currentLesson)
@@ -141,9 +125,6 @@ function handleRetry() {
   render();
 }
 
-/**
- * 「間違えた問題だけ復習」ボタンが押されたときの処理
- */
 function handleRetryIncorrect() {
   const incorrectProblems = state.incorrectAnswers
     .map((item) => item.problem)
@@ -162,9 +143,6 @@ function handleRetryIncorrect() {
   render();
 }
 
-/**
- * 「レッスン選択に戻る」ボタンが押されたときの処理
- */
 function handleBackToHome() {
   loadProgress();
   setState({ activeScreen: "start" });
@@ -173,35 +151,57 @@ function handleBackToHome() {
 
 // --- メインレンダリング関数 ---
 function render() {
-  appContainer.innerHTML = "";
+  const screen = state.activeScreen;
+  const template = templates[screen];
 
-  switch (state.activeScreen) {
-    case "loading":
-      appContainer.innerHTML = `<div class="text-center p-8 bg-white rounded-2xl shadow-lg"><p>問題データを読み込んでいます...</p></div>`;
-      break;
+  if (!template) {
+    showError("エラーが発生しました。画面をリロードしてください。");
+    return;
+  }
+
+  appContainer.innerHTML = "";
+  const screenElement = template.content.cloneNode(true).firstElementChild;
+  appContainer.appendChild(screenElement);
+
+  switch (screen) {
     case "start":
-      appContainer.appendChild(
-        QuizTypeSelection(
-          state.currentQuizType,
-          state.quizData,
-          handleTypeSelect
-        )
+      renderQuizTypeSelection(
+        screenElement.querySelector("#quiz-type-container"),
+        state,
+        handleTypeSelect
       );
-      appContainer.appendChild(StartScreen(state, handleLessonSelect));
+      renderStartScreen(screenElement, state, handleLessonSelect);
       break;
     case "quiz":
-      appContainer.appendChild(
-        QuizScreen(state, handleAnswer, handleNextQuestion, handleQuit)
+      renderQuizScreen(
+        screenElement,
+        state,
+        handleAnswer,
+        handleNextQuestion,
+        handleQuit
       );
       break;
     case "result":
-      appContainer.appendChild(
-        ResultScreen(state, handleRetry, handleRetryIncorrect, handleBackToHome)
+      renderResultScreen(
+        screenElement,
+        state,
+        handleRetry,
+        handleRetryIncorrect,
+        handleBackToHome
       );
       break;
-    default:
-      appContainer.innerHTML = `<p class="text-red-500">エラーが発生しました。画面をリロードしてください。</p>`;
+    case "loading":
+      // 何もしない（テンプレートが表示されるだけ）
+      break;
   }
+}
+
+function showError(message) {
+  appContainer.innerHTML = "";
+  const errorElement =
+    templates.error.content.cloneNode(true).firstElementChild;
+  errorElement.querySelector("p").textContent = message;
+  appContainer.appendChild(errorElement);
 }
 
 // --- 初期化 ---
@@ -212,10 +212,13 @@ async function init() {
     loadProgress();
     setState({ quizData, activeScreen: "start" });
   } catch (error) {
-    appContainer.innerHTML = `<div class="text-center p-8 bg-white rounded-2xl shadow-lg"><p class="text-red-500">問題データの読み込みに失敗しました。ページを再読み込みしてください。</p></div>`;
-  } finally {
-    render();
+    console.error(error);
+    showError(
+      "問題データの読み込みに失敗しました。ページを再読み込みしてください。"
+    );
+    return;
   }
+  render();
 }
 
 // アプリケーションを開始
